@@ -1,0 +1,17 @@
+{
+  "name": "hots-mph",
+  "version": "1.0.0",
+  "description": "API for scrapping HOTSLOGS's more advanced player statics",
+  "main": "index.html",
+  "scripts": {
+    "start": "nw",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Zack Whipkey",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^0.20.0",
+    "nw": "^0.15.4",
+    "request-promise": "^3.0.0"
+  }
+}
