@@ -1,1 +1,1 @@
-web: npm api
+web: npm run-script api
