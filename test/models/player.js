@@ -1,4 +1,5 @@
 let playerModel = require('../../models/player');
+let regionModel = require('../../models/region');
 let expect = require('chai').expect;
 
 //hotslogs API requires _ instead of #.
@@ -7,6 +8,11 @@ const MY_PLAYER_NAME = "zerkz";
 const MY_HOTSLOGS_PLAYER_ID = 2377102;
 
 const HEROES_LIMIT = 5;
+const QUERY_PARAMS = {
+  limit: HEROES_LIMIT,
+  sort: playerModel.HOTS_LOGS_DEFAULT_SORT,
+  region: regionModel.REGIONS.US
+};
 
 describe('PlayerModel', function() {
   describe("#getPlayerIdByName", function () {
@@ -21,22 +27,22 @@ describe('PlayerModel', function() {
   });
   describe("#getTopHeroesByPlayerId", function () {
     it("should always get 5 heroes from by my own playerId.", function() {
-      return expect(playerModel.getTopHeroesByPlayerId(HEROES_LIMIT)(MY_HOTSLOGS_PLAYER_ID))
+      return expect(playerModel.getTopHeroesByPlayerId(QUERY_PARAMS.limit, QUERY_PARAMS.sort)(MY_HOTSLOGS_PLAYER_ID))
         .to.eventually.have.length(HEROES_LIMIT);
     });
   });
   describe("#getPlayerIdByBattleTag", function () {
     it("should always get my player ID from my own battletag..", function() {
-      return expect(playerModel.getPlayerIdByBattleTag(MY_BATTLETAG, 1)).to.eventually.equal(parseInt(MY_HOTSLOGS_PLAYER_ID));
+      return expect(playerModel.getPlayerIdByBattleTag(MY_BATTLETAG, regionModel.REGIONS.US)).to.eventually.equal(parseInt(MY_HOTSLOGS_PLAYER_ID));
     });
   });
   describe("#getTopPlayedHeroesByPlayerNameOrBattleTag", function () {
     it("should always get 5 heroes from by my own player name.", function() {
-      return expect(playerModel.getTopPlayedHeroesByPlayerNameOrBattleTag(MY_PLAYER_NAME, HEROES_LIMIT))
+      return expect(playerModel.getTopPlayedHeroesByPlayerNameOrBattleTag(MY_PLAYER_NAME, QUERY_PARAMS))
         .to.eventually.have.length(HEROES_LIMIT);
     });
     it("should always get 5 heroes from by my own player battletag.", function() {
-      return expect(playerModel.getTopPlayedHeroesByPlayerNameOrBattleTag(MY_BATTLETAG, HEROES_LIMIT))
+      return expect(playerModel.getTopPlayedHeroesByPlayerNameOrBattleTag(MY_BATTLETAG, QUERY_PARAMS))
         .to.eventually.have.length(HEROES_LIMIT);
     });
   });
