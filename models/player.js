@@ -7,7 +7,7 @@ const HOTS_LOGS_API = "https://api.hotslogs.com/Public/";
 const HOTS_LOGS_DEFAULT_SORT = '-level';
 
 request = request.defaults({
-  "User-Agent" : "hotsMPH_PLAYER"
+  "User-Agent" : "HOTSMPH_PLAYER"
 });
 
 // PlayerId
