@@ -56,6 +56,16 @@ function getPlayerIdByBattleTag(battleTag, region) {
   });
 }
 
+function getHeroSkill(hero) {
+  // returns a skill rating for a player x hero, normalized from 0 - 100
+
+  // naive approach that assumes both win % and level are scaled linearly
+  // and have the same relative weight.
+  let winPercent = hero.winPercent / 100.0;
+  let level = hero.level / 20.0;
+  return (level * winPercent) * 100;
+}
+
 // Heroes by Player
 
 // curried
@@ -87,6 +97,7 @@ function getTopHeroesByPlayerId(limit, sort) {
         hero.level = parseInt($tds.eq(3).text());
         hero.gamesPlayed = parseInt($tds.eq(4).text());
         hero.winPercent = parseFloat($tds.eq(6).text()) || null;
+        hero.skill = getHeroSkill(hero);
         heroes.push(hero);
       });
       if (!isDefaultSort) {
