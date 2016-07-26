@@ -5,7 +5,7 @@ let URL = require('url');
 const HOTS_LOGS = "http://www.hotslogs.com/";
 const HOTS_LOGS_API = "https://api.hotslogs.com/Public/"
 request = request.defaults({
-  "User-Agent" : "hotsMPH_PLAYER"
+  "User-Agent" : "HOTSMPH_PLAYER"
 });
 
 //PlayerId
