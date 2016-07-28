@@ -1,3 +1,4 @@
+let RegionModel = require('./region');
 let request = require('request-promise');
 let cheerio = require('cheerio');
 let URL = require('url');
@@ -38,9 +39,7 @@ function getPlayerIdByName(name) {
 }
 
 function getPlayerIdByBattleTag(battleTag, region) {
-  if (!region) {
-    throw "getPlayedIdByBattleTag: region not specified";
-  }
+  region = region || RegionModel.REGIONS.US;
   if (!battleTag) {
     throw "getPlayerIdByBattleTag: battleTag not specified";
   }
@@ -70,13 +69,8 @@ function getHeroSkill(hero) {
 
 // curried
 function getTopHeroesByPlayerId(limit, sort) {
-  limit = parseInt(limit);
-  if (!limit) {
-    throw "No limit specified.";
-  }
-  if (!sort) {
-    throw "No sort specified.";
-  }
+  limit = parseInt(limit) || 5;
+  sort = sort || HOTS_LOGS_DEFAULT_SORT;
   return function(id) {
     if (!id) {
       throw "getTopHeroesByPlayerId: invalid id supplied";
