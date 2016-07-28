@@ -1,8 +1,8 @@
-let playerModel = require('../../models/player');
-let regionModel = require('../../models/region');
+let RegionModel = require('../../models/region');
+let PlayerModel = require('../../models/player');
 let expect = require('chai').expect;
 
-//hotslogs API requires _ instead of #.
+// hotslogs API requires _ instead of #.
 const MY_BATTLETAG = "zerkz_1433";
 const MY_PLAYER_NAME = "zerkz";
 const MY_HOTSLOGS_PLAYER_ID = 2377102;
@@ -11,13 +11,13 @@ const HEROES_LIMIT = 5;
 const QUERY_PARAMS = {
   limit: HEROES_LIMIT,
   sort: playerModel.HOTS_LOGS_DEFAULT_SORT,
-  region: regionModel.REGIONS.US
+  region: RegionModel.REGIONS.US
 };
 
 describe('PlayerModel', function() {
   describe("#getPlayerIdByName", function () {
     it("should always get my own playerId from my own player name.", function() {
-      return expect(playerModel.getPlayerIdByName(MY_PLAYER_NAME))
+      return expect(PlayerModel.getPlayerIdByName(MY_PLAYER_NAME))
         .to.eventually.equal(MY_HOTSLOGS_PLAYER_ID);
     });
     it("should always get my friend's playerId from my friend's player name.", function() {
@@ -33,7 +33,7 @@ describe('PlayerModel', function() {
   });
   describe("#getPlayerIdByBattleTag", function () {
     it("should always get my player ID from my own battletag.", function() {
-      return expect(playerModel.getPlayerIdByBattleTag(MY_BATTLETAG, regionModel.REGIONS.US)).to.eventually.equal(parseInt(MY_HOTSLOGS_PLAYER_ID));
+      return expect(playerModel.getPlayerIdByBattleTag(MY_BATTLETAG, RegionModel.REGIONS.US)).to.eventually.equal(parseInt(MY_HOTSLOGS_PLAYER_ID));
     });
   });
   describe("#getTopPlayedHeroesByPlayerNameOrBattleTag", function () {

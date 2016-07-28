@@ -1,11 +1,72 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="./ui/heroes_table_injector.js"> </script>
+    <script src="./ui/js/jquery-3.1.0.min.js"> </script>
+    <script src="./ui/js/materialize.min.js"> </script>
+    <link href="./ui/css/materialize.min.css" rel="stylesheet" type="text/css"/>
     <title>Hots MPH</title>
   </head>
   <body>
-    <input type="text" onblur="upsertHeroesTable(this.value, this)" />
-    <input type="text"/>
+    <div id="masterDiv" class="container">
+      <div class="row">
+        <div class="player-heroes-section section col s4">
+          <h5>Player:</h5>
+          <input type="text" class="player-text-input"
+            onblur="upsertHeroesTable(this.value,this.parentNode.querySelectorAll('.heroes-container'))" />
+          <div class="heroes-container"></div>
+        </div>
+        <div class="player-heroes-section section col s4">
+          <h5>Player:</h5>
+          <input type="text" class="player-text-input"
+            onblur="upsertHeroesTable(this.value,this.parentNode.querySelectorAll('.heroes-container'))" />
+          <div class="heroes-container"></div>
+        </div>
+        <div class="player-heroes-section section col s4">
+          <h5>Player:</h5>
+          <input type="text" class="player-text-input"
+            onblur="upsertHeroesTable(this.value,this.parentNode.querySelectorAll('.heroes-container'))" />
+          <div class="heroes-container"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="player-heroes-section section col s4">
+          <h5>Player:</h5>
+          <input type="text" class="player-text-input"
+            onblur="upsertHeroesTable(this.value,this.parentNode.querySelectorAll('.heroes-container'))" />
+          <div class="heroes-container"></div>
+        </div>
+        <div class="player-heroes-section section col s4">
+          <h5>Player:</h5>
+          <input type="text" class="player-text-input"
+            onblur="upsertHeroesTable(this.value,this.parentNode.querySelectorAll('.heroes-container'))" />
+          <div class="heroes-container"></div>
+        </div>
+        <div class="player-heroes-section section col s4">
+          <h5>Player:</h5>
+          <input type="text" class="player-text-input"
+            onblur="upsertHeroesTable(this.value,this.parentNode.querySelectorAll('.heroes-container'))" />
+          <div class="heroes-container"></div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
+
+<script>
+nw.Window.get().resizeTo(800,600);
+
+let PlayerModel = require('./models/player.js');
+let template = require('./ui/templates/heroes_table.js');
+
+function upsertHeroesTable(name, element) {
+  if (!name) {
+    return;
+  }
+  PlayerModel.getTopPlayedHeroesByPlayerNameOrBattleTag(name, 5)
+    .then(function (heroes) {
+      let heroesTable = template.render({ "heroes" : heroes });;
+      console.log(heroesTable);
+      $(element).replaceWith($(heroesTable));
+  });
+}
+</script>
