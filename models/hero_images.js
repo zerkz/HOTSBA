@@ -1,5 +1,9 @@
 //used to retrieving hero images from HOTS LOGS
+
 let request = require('request-promise');
+//we use this later on for file stream piping,
+// as request-promise as high mem footprint for this.
+let ogRequest = require('request');
 let cheerio = require('cheerio');
 let fs = require('fs-promise');
 let URL = require('url');
@@ -21,24 +25,28 @@ function getCloudFrontHost() {
   return request.get("http://www.hotslogs.com/Info/About")
     .then(function(body) {
       let hotsLogsLogo = cheerio.load(body)(".navbar-header img[alt='HOTS Logs']");
-      if (hotsLogsLogo.length) {
-        throw "Couldn't find logo to grab cloudfront hostname >:("
+      if (hotsLogsLogo.length == 0) {
+        throw "Couldn't find logo to grab cloudfront hostname >:(";
       }
-      return URL.parse(hotsLogsLogo.attr('src')).hostname;
+      console.log(URL.parse(hotsLogsLogo.attr('src'), false, true));
+      return URL.parse(hotsLogsLogo.attr('src'), false, true).hostname;
     })
 }
 
+function getHeroesJSONFromAPI() {
+  return request(HOTS_LOGS_API_OPTS);
+};
+
+function readLocalImages() {
+  return fs.readdir("../ui/images/heroes");
+};
+
 function checkIfImagesNeedDownloaded() {
-  return async.parallel({
-    cloudFrontHost : getCloudFrontHost
-    heroesJSON : function {
-      return request(HOTS_LOGS_API_OPTS);
-  }, localImageFiles : function  {
-      return fs.readdir("../ui/images/heroes");
-  }}, function (err, results) {
-    let heroesJSON = results.heroesJSON.toArray();
-    let localImageFiles = results.localImagesFiles;
-    let cloudFrontHost = results.cloudFrontHost;
+  return Promise.join(getCloudFrontHost(), getHeroesJSONFromAPI(), readLocalImages(),
+  function (cloudFrontHost, heroesJSON, localImageFiles) {
+    updateLocalHeroesJSON(heroesJSON).then(function () {
+      console.log("updated heroes json")
+    });
     if (heroesJSON.length == localImageFiles.length) {
       //we're good to go!
       return Promise.resolve("No New Heroes!");
@@ -46,7 +54,7 @@ function checkIfImagesNeedDownloaded() {
       if(heroesJSON.length > localImageFiles.length) {
         //new heroes released since last run? lets filter them out and grab the images
         let newHeroesJSON = heroesJSON.filter(function (hero) {
-          return !localImagesFiles.includes(hero.imageURL + ".png");
+          return !localImageFiles.includes(hero.imageURL + ".png");
         });
         return downloadAndDumpImages(getHeroImagePaths(newHeroesJSON, cloudFrontHost))
           .return("New Heroes Added: " + newHeroesJSON.map(getHeroName).join(', '));
@@ -60,38 +68,53 @@ function checkIfImagesNeedDownloaded() {
   });
 }
 
+checkIfImagesNeedDownloaded().then(console.log);
+
 function getHeroName(heroJSON) {
   return heroJSON.PrimaryName;
 }
 
 function getHeroImagePaths(heroesJSON, cloudFrontHost) {
   return heroesJSON.map(function (hero) {
-    return constructImageURL(hero.imageURL, cloudFrontHost);
+    return constructImageURL(hero.ImageURL, cloudFrontHost);
   });
 }
 
 function constructImageURL(imageName, cloudFrontHost) {
-  let imagePath = "http://" + cloudFrontHost + "/Images/"  + imageName + ".png";
+  let imagePath = "http://" + cloudFrontHost + "/Images/Heroes/Portraits/"  + imageName + ".png";
+  console.log(imagePath);
   return imagePath;
 }
 
 function downloadAndDumpImages(imagePaths) {
-  imagePaths.forEach(function (path) {
-    request(path).then(function(body) {
-      let fileName = parseImageFileNameFromPath(path)
-      fs.writeFile("../ui/images/heroes/" + fileName, body).then(function () {
+  let imagePromises = imagePaths.map(function (path) {
+    //we downloading an image, no need to encode.
+    let opts = {
+      uri : path,
+      encoding : null
+    };
+    return request(opts).then(function(body) {
+      let fileName = parseImageFileNameFromPath(path);
+      return fs.writeFile("../ui/images/heroes/" + fileName, body).then(function () {
         console.log('file ' + fileName + " written");
       });
     });
   });
+  return Promise.all(imagePromises);
+}
+
+function parseImageFileNameFromPath (path) {
+  if (!path) {
+    throw "Invalid image path supplied";
+  }
+  return path.substring(path.lastIndexOf('/') + 1, path.length);
 }
 
 function updateLocalHeroesJSON(heroesJSON) {
-  return fs.writeFile(heroesJSON, '../ui/js/heroes.json');
+  return fs.writeFile('../ui/js/heroes.json', JSON.stringify(heroesJSON));
 }
 
 module.exports = {
   getHeroImagePaths : getHeroImagePaths,
-  convertToFullImage : convertToFullImage,
   parseImageFileNameFromPath : parseImageFileNameFromPath
 }
