@@ -3,7 +3,6 @@
 
 ## Local "temp" heroes stuff
 ui/images/heroes
-ui/js/heroes.json
 
 ### Git ###
 *.orig

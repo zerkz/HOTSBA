@@ -7,6 +7,44 @@
     <title>Hots MPH</title>
   </head>
   <body>
+    <script>
+    let PlayerModel = require(process.cwd() + '/models/player.js');
+    let template = require(process.cwd() + '/ui/templates/heroes_table.js');
+    let HeroImages = require(process.cwd() + '/models/hero_images.js');
+    let heroesImageMap;
+    Materialize.toast('Checking for new heroes..', 4000)
+    HeroImages.checkIfHeroesNeedDownloaded()
+      .spread(function (message, updatedHeroesJSON) {
+        heroesImageMap = updatedHeroesJSON;
+        Materialize.toast(message, 4000, 'rounded');
+      }).catch(function (error) {
+        Materialize.toast(error + ". Please restart the HotsMPH",8000,'rounded', function () {
+          nw.App.quit();
+        });
+      });
+
+    function upsertHeroesTable(name, element) {
+      if (!name) {
+        return;
+      }
+      PlayerModel.getTopPlayedHeroesByPlayerNameOrBattleTag(name, 5)
+        .then(function (topHeroes) {
+          topHeroes = topHeroes.map(function (topHero) {
+            let filteredHero = heroesImageMap.filter(hero => hero.PrimaryName == topHero.name);
+            if (!filteredHero.length) {
+              throw "PrimaryName in HeroesJSON didn't map to scrapped hero name";
+            } else {
+              topHero.imageName = filteredHero[0].ImageURL;
+              return topHero;
+            }
+          });
+          let heroesTable = template.render({
+            "heroes" : topHeroes
+          });
+          $(element).replaceWith($(heroesTable));
+      });
+    }
+    </script>
     <div id="masterDiv" class="container">
       <div class="row">
         <div class="player-heroes-section section col s4">
@@ -51,22 +89,3 @@
     </div>
   </body>
 </html>
-
-<script>
-nw.Window.get().resizeTo(800,600);
-
-let PlayerModel = require('./models/player.js');
-let template = require('./ui/templates/heroes_table.js');
-
-function upsertHeroesTable(name, element) {
-  if (!name) {
-    return;
-  }
-  PlayerModel.getTopPlayedHeroesByPlayerNameOrBattleTag(name, 5)
-    .then(function (heroes) {
-      let heroesTable = template.render({ "heroes" : heroes });;
-      console.log(heroesTable);
-      $(element).replaceWith($(heroesTable));
-  });
-}
-</script>

@@ -1,4 +1,4 @@
-let PlayerModel = require('./models/player');
+let PlayerModel = require(process.cwd() + '/models/player');
 let express = require('express');
 var app = express();
 

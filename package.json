@@ -1,20 +1,21 @@
 {
   "name": "hots-mph",
   "version": "1.0.0",
-  "description": "API for scrapping HOTSLOGS's more advanced player statics",
+  "description": "Tool built on node-webkit for getting top played heroes for players, using HOTSLogs as a data source.",
   "main": "index.html",
+  "window": {
+    "height": 800,
+    "width": 600
+  },
   "scripts": {
-    "start": "nw ./",
+    "start": "nw",
     "api": "node api.js",
     "test": "mocha test"
   },
-  "author": "Zack Whipkey",
+  "author": "Zack Whipkey (ZDWare.com)",
   "license": "ISC",
   "engines": {
     "node": ">=6.3.0"
-  },
-  "window": {
-    "toolbar": true
   },
   "dependencies": {
     "async": "^2.0.1",
@@ -23,6 +24,7 @@
     "cheerio": "^0.20.0",
     "express": "^4.14.0",
     "fs-promise": "^0.5.0",
+    "hogan.js": "^3.0.2",
     "nw": "^0.15.4",
     "request": "^2.73.0",
     "request-promise": "^4.0.2"

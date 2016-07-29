@@ -38,18 +38,16 @@ function getHeroesJSONFromAPI() {
 };
 
 function readLocalImages() {
-  return fs.readdir("../ui/images/heroes");
+  return fs.readdir(process.cwd() + "/ui/images/heroes");
 };
 
-function checkIfImagesNeedDownloaded() {
+//bread and butter.
+function checkIfHeroesNeedDownloaded() {
   return Promise.join(getCloudFrontHost(), getHeroesJSONFromAPI(), readLocalImages(),
   function (cloudFrontHost, heroesJSON, localImageFiles) {
-    updateLocalHeroesJSON(heroesJSON).then(function () {
-      console.log("updated heroes json")
-    });
     if (heroesJSON.length == localImageFiles.length) {
       //we're good to go!
-      return Promise.resolve("No New Heroes!");
+      return Promise.resolve(generateResult("No New Heroes!"));
     } else {
       if(heroesJSON.length > localImageFiles.length) {
         //new heroes released since last run? lets filter them out and grab the images
@@ -57,18 +55,20 @@ function checkIfImagesNeedDownloaded() {
           return !localImageFiles.includes(hero.imageURL + ".png");
         });
         return downloadAndDumpImages(getHeroImagePaths(newHeroesJSON, cloudFrontHost))
-          .return("New Heroes Added: " + newHeroesJSON.map(getHeroName).join(', '));
+          .return(generateResult("New Heroes Added: " + newHeroesJSON.map(getHeroName).join(', ')));
       } else {
         //fresh run, download all the things!
         let paths = getHeroImagePaths(heroesJSON, cloudFrontHost);
         return downloadAndDumpImages(paths).then(updateLocalHeroesJSON)
-          .return("All Hero Images downloaded!");
+          .return(generateResult("All Hero Images downloaded!"));
       }
+    }
+
+    function generateResult(message) {
+      return [message, heroesJSON];
     }
   });
 }
-
-checkIfImagesNeedDownloaded().then(console.log);
 
 function getHeroName(heroJSON) {
   return heroJSON.PrimaryName;
@@ -95,7 +95,7 @@ function downloadAndDumpImages(imagePaths) {
     };
     return request(opts).then(function(body) {
       let fileName = parseImageFileNameFromPath(path);
-      return fs.writeFile("../ui/images/heroes/" + fileName, body).then(function () {
+      return fs.writeFile(process.cwd() + "/ui/images/heroes/" + fileName, body).then(function () {
         console.log('file ' + fileName + " written");
       });
     });
@@ -111,10 +111,11 @@ function parseImageFileNameFromPath (path) {
 }
 
 function updateLocalHeroesJSON(heroesJSON) {
-  return fs.writeFile('../ui/js/heroes.json', JSON.stringify(heroesJSON));
+  return fs.writeFile(process.cwd() + '/ui/js/heroes.json', JSON.stringify(heroesJSON));
 }
 
 module.exports = {
+  checkIfHeroesNeedDownloaded : checkIfHeroesNeedDownloaded,
   getHeroImagePaths : getHeroImagePaths,
   parseImageFileNameFromPath : parseImageFileNameFromPath
 }
