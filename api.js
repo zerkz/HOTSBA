@@ -1,15 +1,19 @@
-let PlayerModel = require(process.cwd() + '/models/player');
+let PlayerModel = require('./models/player');
+let RegionModel = require('./models/region');
+
 let express = require('express');
 var app = express();
 
-
-app.get('/player/:name/heroes', function (req, res) {
-  let name = req.params.name || "";
-  let limit = req.query.limit || 5;
-  //default region to US if not supplied.
-  let region = req.query.region || 1;
-  PlayerModel.getTopPlayedHeroesByPlayerNameOrBattleTag(name, limit, region)
-  .then(function (heroes) {
+app.get('/player/:name/heroes', function(req, res) {
+  let defaultParams = {
+    limit: 5,
+    region: RegionModel.REGIONS.US,
+    sort: PlayerModel.HOTS_LOGS_DEFAULT_SORT
+  };
+  let name = req.params.name || '';
+  let params = Object.assign({}, defaultParams, req.query);
+  PlayerModel.getTopPlayedHeroesByPlayerNameOrBattleTag(name, params)
+  .then(function(heroes) {
     res.json(heroes);
   });
 });
