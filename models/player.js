@@ -74,15 +74,16 @@ function getHeroSkill(hero) {
 // Heroes by Player
 
 function getPlayerProfile(id) {
-  return request.get(HOTS_LOGS + "Player/Profile?PlayerID=" + id);
+  return request.get(HOTS_LOGS + "Player/Profile?PlayerID=" + id).then(
+    (body) => { return cheerio.load(body); }
+  );
 }
 
 // curried
 
-function getTopHeroes(body, limit, sort) {
+function getTopHeroes($, limit, sort) {
   limit = parseInt(limit) || 5;
   sort = sort || HOTS_LOGS_DEFAULT_SORT;
-  let $ = cheerio.load(body);
   let heroes = [];
   let $grid = $('div#heroStatistics table.rgMasterTable tr[id^="ctl00_MainContent_RadGridCharacterStatistics"]');
   let isDefaultSort = sort == HOTS_LOGS_DEFAULT_SORT;
@@ -114,8 +115,7 @@ function getTopHeroes(body, limit, sort) {
   return heroes;
 }
 
-function getRoles(body) {
-  let $ = cheerio.load(body);
+function getRoles($) {
   let $roles = $('div.DivProfilePlayerRoleStatistic table');
   let roles = [];
   $roles.each(
@@ -169,11 +169,11 @@ function getPlayerDetailsByBattleTag(battleTag, params) {
   return getHotsLogsPlayerDetails(battleTag, params.region).then(
     (data) => {
       return getPlayerProfile(data.PlayerID).then(
-        (profile) => {
+        ($) => {
           let result = {};
           result.rankings = data.LeaderboardRankings;
-          result.heroes = getTopHeroes(profile, params.limit, params.sort);
-          result.roles = getRoles(profile);
+          result.heroes = getTopHeroes($, params.limit, params.sort);
+          result.roles = getRoles($);
           return result;
         }
       )
