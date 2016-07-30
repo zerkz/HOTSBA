@@ -152,6 +152,16 @@ function getTopHeroesByPlayerId(limit, sort) {
   }
 }
 
+function getRankings(data) {
+  let rankings = data.LeaderboardRankings;
+  let result = {};
+  for (ranking of rankings) {
+    let key = ranking.GameMode;
+    delete ranking.GameMode;
+    result[key] = ranking;
+  }
+  return result;
+}
 function getTopPlayedHeroesByPlayerNameOrBattleTag(name, params) {
   let playerId = null;
   // support name#id or name_id format
@@ -171,7 +181,7 @@ function getPlayerDetailsByBattleTag(battleTag, params) {
       return getPlayerProfile(data.PlayerID).then(
         ($) => {
           let result = {};
-          result.rankings = data.LeaderboardRankings;
+          result.rankings = getRankings(data);
           result.heroes = getTopHeroes($, params.limit, params.sort);
           result.roles = getRoles($);
           return result;
