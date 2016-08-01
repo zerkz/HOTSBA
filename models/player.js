@@ -89,7 +89,7 @@ function getTopHeroes($, limit, sort) {
   let isDefaultSort = sort == HOTS_LOGS_DEFAULT_SORT;
   // if sorting by the default, scan only the number of rows requested
   // otherwise, scan all rows, then sort and limit
-  $grid.slice(1, isDefaultSort ? limit + 1 : undefined).each( function (index, ele) {
+  $grid.slice(0, isDefaultSort ? limit + 1 : undefined).each( function (index, ele) {
     let hero = {};
     let $ele = $(ele);
     let $tds = $ele.children('td');;
