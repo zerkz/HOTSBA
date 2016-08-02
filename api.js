@@ -18,5 +18,18 @@ app.get('/player/:name/heroes', function(req, res) {
   });
 });
 
+app.get('/player/:battleTag/', function(req, res) {
+  let defaultParams = {
+    region: RegionModel.REGIONS.US
+  };
+  let battleTag = req.params.battleTag|| '';
+  let params = Object.assign({}, defaultParams, req.query);
+  PlayerModel.getPlayerDetailsByBattleTag(battleTag, params).then(
+    (data) => {
+      res.json(data);
+    }
+  )
+});
+
 app.listen(process.env.PORT || 8080);
 console.log('running api');
