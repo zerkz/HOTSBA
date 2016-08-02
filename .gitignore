@@ -1,8 +1,4 @@
-
 # Created by https://www.gitignore.io/api/git,node,osx
-
-## Local "temp" heroes stuff
-ui/images/heroes/*.png
 
 ### Git ###
 *.orig
