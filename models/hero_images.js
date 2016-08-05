@@ -28,7 +28,6 @@ function getCloudFrontHost() {
       if (hotsLogsLogo.length == 0) {
         throw "Couldn't find logo to grab cloudfront hostname >:(";
       }
-      console.log(URL.parse(hotsLogsLogo.attr('src'), false, true));
       return URL.parse(hotsLogsLogo.attr('src'), false, true).hostname;
     })
 }
@@ -45,7 +44,8 @@ function readLocalImages() {
 function checkIfHeroesNeedDownloaded() {
   return Promise.join(getCloudFrontHost(), getHeroesJSONFromAPI(), readLocalImages(),
   function (cloudFrontHost, heroesJSON, localImageFiles) {
-    if (heroesJSON.length == localImageFiles.length) {
+    //we have to subtract 1 because of .gitignore...
+    if (heroesJSON.length == (localImageFiles.length - 1)) {
       //we're good to go!
       return Promise.resolve(generateResult("No New Heroes!"));
     } else {

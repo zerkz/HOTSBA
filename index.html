@@ -1,16 +1,23 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="./ui/js/jquery-3.1.0.min.js"> </script>
-    <script src="./ui/js/materialize.min.js"> </script>
+    <script>
+    window.nodeRequire = require;
+    delete window.require;
+    delete window.exports;
+    delete window.module;
+    </script>
+    <script src="./ui/js/jquery-3.1.0.min.js"></script>
+    <script src="./ui/js/materialize.min.js"></script>
+    <script src="http://twitter.github.com/hogan.js/builds/3.0.1/hogan-3.0.1.js"></script>
+    <script src="./ui/templates/heroes_table.js"> </script>
     <link href="./ui/css/materialize.min.css" rel="stylesheet" type="text/css"/>
     <title>Hots MPH</title>
   </head>
   <body>
     <script>
-    let PlayerModel = require(process.cwd() + '/models/player.js');
-    let template = require(process.cwd() + '/ui/templates/heroes_table.js');
-    let HeroImages = require(process.cwd() + '/models/hero_images.js');
+    let PlayerModel = nodeRequire(process.cwd() + '/models/player.js');
+    let HeroImages = nodeRequire(process.cwd() + '/models/hero_images.js');
     let heroesImageMap;
     Materialize.toast('Checking for new heroes..', 4000)
     HeroImages.checkIfHeroesNeedDownloaded()
@@ -19,7 +26,7 @@
         Materialize.toast(message, 4000, 'rounded');
       }).catch(function (error) {
         Materialize.toast(error + ". Please restart the HotsMPH",8000,'rounded', function () {
-          nw.App.quit();
+          console.log('quit callback');
         });
       });
 
@@ -38,7 +45,7 @@
               return topHero;
             }
           });
-          let heroesTable = template.render({
+          let heroesTable = templates['heroes_table'].render({
             "heroes" : topHeroes
           });
           $(element).replaceWith($(heroesTable));
