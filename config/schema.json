@@ -1,0 +1,19 @@
+{
+  "screen" : {
+    "width" : {
+      "doc" : "width of hotsMPH window",
+      "format" : "int",
+      "default" : 800
+    },
+    "height" : {
+      "doc" : "height of hotsMPH window",
+      "format" : "int",
+      "default": 600
+    }
+  },
+  "mode" : {
+    "doc" : "Which mode hotsMPH should run in (enemy team or both teams)",
+    "format" : "String",
+    "default" : "enemyOnly"
+  }
+}

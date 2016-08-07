@@ -30,6 +30,12 @@
         });
       });
 
+      function clearAllHeroCollections() {
+        console.log('clicky');
+        $('.heroes-collection').replaceWith($('<div class="heroes-container"></div>'));
+        $('.player-text-input').val('');
+      }
+
     function upsertHeroesTable(name, element) {
       if (!name) {
         return;
@@ -53,6 +59,11 @@
     }
     </script>
     <div id="masterDiv" class="container">
+      <div class="row">
+        <div class="col s6">
+            <a class="waves-effect waves-light btn" id="clearButton">Clear All</a>
+        </div>
+      </div>
       <div class="row">
         <div class="player-heroes-section section col s4">
           <h5>Player:</h5>
@@ -94,5 +105,8 @@
         </div>
       </div>
     </div>
+    <script>
+    $('#clearButton').click(clearAllHeroCollections);
+    </script>
   </body>
 </html>
