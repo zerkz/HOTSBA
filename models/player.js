@@ -89,7 +89,7 @@ function getTopHeroes($, limit, sort) {
   let isDefaultSort = sort == HOTS_LOGS_DEFAULT_SORT;
   // if sorting by the default, scan only the number of rows requested
   // otherwise, scan all rows, then sort and limit
-  $grid.slice(0, isDefaultSort ? limit + 1 : undefined).each( function (index, ele) {
+  $grid.slice(0, isDefaultSort ? limit : undefined).each( function (index, ele) {
     let hero = {};
     let $ele = $(ele);
     let $tds = $ele.children('td');;
@@ -146,7 +146,7 @@ function getTopHeroesByPlayerId(limit, sort) {
     return getPlayerProfile(id)
     .then(
       (body) => {
-        return getTopHeroes(body, limit, sort);      
+        return getTopHeroes(body, limit, sort);
       }
     );
   }
@@ -168,7 +168,7 @@ function getTopPlayedHeroesByPlayerNameOrBattleTag(name, params) {
   name = name.replace('#', '_');
   if (name.indexOf('_') > 0) {
     playerId = getPlayerIdByBattleTag(name, params.region);
-  } else {  
+  } else {
     playerId = getPlayerIdByName(name);
   }
   return playerId.then(getTopHeroesByPlayerId(params.limit, params.sort));

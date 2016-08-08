@@ -10,7 +10,6 @@ app.on('ready', createMainWindow);
 
 function createMainWindow(width, height) {
   let primaryDisplay = electron.screen.getPrimaryDisplay();
-  console.log(primaryDisplay);
   win = new BrowserWindow({width: width, height: height, show : false})
   win.loadURL(`file://${__dirname}/index.html`);
   if (devMode) {

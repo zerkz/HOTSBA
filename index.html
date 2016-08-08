@@ -11,102 +11,42 @@
     <script src="./ui/js/materialize.min.js"></script>
     <script src="http://twitter.github.com/hogan.js/builds/3.0.1/hogan-3.0.1.js"></script>
     <script src="./ui/templates/heroes_table.js"> </script>
+    <script src="./ui/templates/hero_input_container.js"> </script>
+    <script src="./ui/templates/my_team_container.js"> </script>
+    <script src="./ui/templates/enemy_team_container.js"> </script>
     <link href="./ui/css/materialize.min.css" rel="stylesheet" type="text/css"/>
-    <title>Hots MPH</title>
+    <title>HOTSBA</title>
   </head>
   <body>
-    <script>
-    let PlayerModel = nodeRequire(process.cwd() + '/models/player.js');
-    let HeroImages = nodeRequire(process.cwd() + '/models/hero_images.js');
-    let heroesImageMap;
-    Materialize.toast('Checking for new heroes..', 4000)
-    HeroImages.checkIfHeroesNeedDownloaded()
-      .spread(function (message, updatedHeroesJSON) {
-        heroesImageMap = updatedHeroesJSON;
-        Materialize.toast(message, 4000, 'rounded');
-      }).catch(function (error) {
-        Materialize.toast(error + ". Please restart the HotsMPH",8000,'rounded', function () {
-          console.log('quit callback');
-        });
-      });
 
-      function clearAllHeroCollections() {
-        console.log('clicky');
-        $('.heroes-collection').replaceWith($('<div class="heroes-container"></div>'));
-        $('.player-text-input').val('');
-      }
-
-    function upsertHeroesTable(name, element) {
-      if (!name) {
-        return;
-      }
-      PlayerModel.getTopPlayedHeroesByPlayerNameOrBattleTag(name, 5)
-        .then(function (topHeroes) {
-          topHeroes = topHeroes.map(function (topHero) {
-            let filteredHero = heroesImageMap.filter(hero => hero.PrimaryName == topHero.name);
-            if (!filteredHero.length) {
-              throw "PrimaryName in HeroesJSON didn't map to scrapped hero name";
-            } else {
-              topHero.imageName = filteredHero[0].ImageURL;
-              return topHero;
-            }
-          });
-          let heroesTable = templates['heroes_table'].render({
-            "heroes" : topHeroes
-          });
-          $(element).replaceWith($(heroesTable));
-      });
-    }
-    </script>
-    <div id="masterDiv" class="container">
-      <div class="row">
-        <div class="col s6">
-            <a class="waves-effect waves-light btn" id="clearButton">Clear All</a>
+    <div id="masterDiv">
+      <nav>
+        <div class="nav-wrapper light-blue darken-3">
+          <a href="#" class="brand-logo right">
+            <img style="height:60px" class="responsive-img" src="./ui/images/logo.png"></img>
+          </a>
+          <ul id="nav-mobile" class="left">
+            <li><a id="clearButton"class="waves-effect waves-light btn">Clear All</a></li>
+            <li id="enemiesTab" class="active"><a>Enemies</a></li>
+            <li id="alliesTab"><a>Allies</a></li>
+          </ul>
         </div>
-      </div>
-      <div class="row">
-        <div class="player-heroes-section section col s4">
-          <h5>Player:</h5>
-          <input type="text" class="player-text-input"
-            onblur="upsertHeroesTable(this.value,this.parentNode.querySelectorAll('.heroes-container'))" />
-          <div class="heroes-container"></div>
-        </div>
-        <div class="player-heroes-section section col s4">
-          <h5>Player:</h5>
-          <input type="text" class="player-text-input"
-            onblur="upsertHeroesTable(this.value,this.parentNode.querySelectorAll('.heroes-container'))" />
-          <div class="heroes-container"></div>
-        </div>
-        <div class="player-heroes-section section col s4">
-          <h5>Player:</h5>
-          <input type="text" class="player-text-input"
-            onblur="upsertHeroesTable(this.value,this.parentNode.querySelectorAll('.heroes-container'))" />
-          <div class="heroes-container"></div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="player-heroes-section section col s4">
-          <h5>Player:</h5>
-          <input type="text" class="player-text-input"
-            onblur="upsertHeroesTable(this.value,this.parentNode.querySelectorAll('.heroes-container'))" />
-          <div class="heroes-container"></div>
-        </div>
-        <div class="player-heroes-section section col s4">
-          <h5>Player:</h5>
-          <input type="text" class="player-text-input"
-            onblur="upsertHeroesTable(this.value,this.parentNode.querySelectorAll('.heroes-container'))" />
-          <div class="heroes-container"></div>
-        </div>
-        <div class="player-heroes-section section col s4">
-          <h5>Player:</h5>
-          <input type="text" class="player-text-input"
-            onblur="upsertHeroesTable(this.value,this.parentNode.querySelectorAll('.heroes-container'))" />
-          <div class="heroes-container"></div>
-        </div>
-      </div>
+      </nav>
+      <div id="enemiesContainer"></div>
+      <div id="alliesContainer" class="hide"></div>
     </div>
+    <script src="./ui/js/hotsba.js"></script>
     <script>
+    let partial = { "hero_input_container" : templates["hero_input_container"]};
+    $('#enemiesContainer')
+      .append(templates["enemy_team_container"].render({"header-text-class" : "red-text"},partial));
+    $('#alliesContainer')
+      .append(templates["my_team_container"].render({"header-text-class" : "blue-text"},partial));
+    //click listeners..
     $('#clearButton').click(clearAllHeroCollections);
+    $('#enemiesTab').click(showEnemiesTabSection);
+    $('#alliesTab').click(showAlliesTabSection);
+    newHeroesCheck();
     </script>
   </body>
 </html>
