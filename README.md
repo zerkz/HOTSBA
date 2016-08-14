@@ -1,8 +1,6 @@
 # HOTSBA
 
-## Want to use HOTSBA?
-
-### Download Binaries
+## [Want to use/download HOTSBA?]https://github.com/zerkz/HOTSBA/releases
 
 ## Want to develop on/customize HOTSBA?
 
