@@ -38,7 +38,7 @@ My #1 piece of advice? Work with your team, even if they are raging/being obnoxi
 It's based upon Squirrel. I learned about all of this + build servers in nearly two days,
 so I haven't had time to make a .gif that doesn't seem completely different from the HOTSBA theme.
 
-Designers feel free to come up with an nice gif to show during install! 
+Designers feel free to come up with an nice gif to show during install!
 
 ## Dude... this icon....
 I know. Just imagine it as an H next a man trapped inside of a bandaid.

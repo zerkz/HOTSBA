@@ -5,7 +5,7 @@
   "homepage": "www.hotsba.com",
   "description": "A draft helper/ban aid for Heroes of the Storm.",
   "main": "main.js",
-  "author": "Zack Whipkey (ZDWare.com), Anthony Leontiev",
+  "author": "Zack Whipkey <admin@hotsba.com> (http://zdware.com/)",
   "license": "ISC",
   "engines": {
     "node": ">=6.1.0"
