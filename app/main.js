@@ -1,3 +1,6 @@
+//handle all these damn squirrel events.
+if(require('electron-squirrel-startup')) return;
+
 const electron = require('electron');
 const {app, BrowserWindow} = electron;
 const config = require('convict');
