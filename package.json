@@ -22,7 +22,7 @@
     "test": "mocha test",
     "genTemplates": "hulk ./app/ui/templates/*.mustache -o ./app/ui/templates/",
     "pack": "build --dir",
-    "dist": "build"
+    "dist": "build -mw"
   },
   "author": "Zack Whipkey <admin@hotsba.com> (http://zdware.com/)",
   "license": "GPL-3.0",
