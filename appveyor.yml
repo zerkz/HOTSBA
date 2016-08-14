@@ -1,0 +1,9 @@
+platform:
+  - x64
+
+cache:
+  - node_modules
+  - '%USERPROFILE%\.electron'
+
+test_script:
+  - npm run test
