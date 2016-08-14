@@ -3,6 +3,11 @@ dist: trusty
 
 language: node_js
 
+addons:
+  apt:
+    packages:
+      - icnsutils
+
 cache:
   directories:
   - node_modules
@@ -15,6 +20,7 @@ before_install:
 
 install:
 - nvm install 6.1.0
+- npm install npm -g
 - npm install
 
 script:
