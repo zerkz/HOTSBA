@@ -12,7 +12,7 @@
     }
   },
   "mode" : {
-    "doc" : "Which mode hotsMPH should run in (enemy team or both teams)",
+    "doc" : "Which mode hotsba should run in (enemy team or both teams)",
     "format" : "String",
     "default" : "enemyOnly"
   }

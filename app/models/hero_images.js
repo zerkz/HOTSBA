@@ -59,8 +59,7 @@ function checkIfHeroesNeedDownloaded() {
       } else {
         //fresh run, download all the things!
         let paths = getHeroImagePaths(heroesJSON, cloudFrontHost);
-        return downloadAndDumpImages(paths).then(updateLocalHeroesJSON)
-          .return(generateResult("All Hero Images downloaded!"));
+        return downloadAndDumpImages(paths).return(generateResult("All Hero Images downloaded!"));
       }
     }
 

@@ -36,7 +36,7 @@ function newHeroesCheck() {
       heroesImageMap = updatedHeroesJSON;
       Materialize.toast(message, 4000, 'rounded');
     }).catch(function (error) {
-      Materialize.toast(error + ". Please restart the HotsMPH",8000,'rounded');
+      Materialize.toast(error + ". Please restart the HOTSBA",8000,'rounded');
     });
 }
 
@@ -73,7 +73,6 @@ function upsertPlayerDetails(name, element, teamColor) {
         } else {
           topHero.imageName = filteredHero[0].ImageURL;
           topHero.winPercentColor = getColorForWinPercentage(topHero.winPercent);
-          console.log(topHero.winPercentColor);
           return topHero;
         }
       });
