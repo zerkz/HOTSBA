@@ -6,7 +6,7 @@ const numHeroes = 5;
 const playerDetailsClass = "player-details-table";
 
 const {app, shell} = nodeRequire('electron').remote;
-$('#versionHeader').text("v" + app.getVersion() + "BETA");
+$('#versionHeader').text("v" + app.getVersion());
 const partial = { "hero_input_container" : templates["hero_input_container"] };
 $('#enemiesContainer').append(templates["enemy_team_container"].render({
     "header-text-class" : "red",

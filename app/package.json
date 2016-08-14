@@ -13,6 +13,7 @@
   "dependencies": {
     "cheerio": "^0.20.0",
     "convict": "^1.4.0",
+    "electron-squirrel-startup": "^1.0.0",
     "express": "^4.14.0",
     "fs-promise": "^0.5.0",
     "request": "^2.73.0",
