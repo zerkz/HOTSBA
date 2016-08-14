@@ -1,22 +1,51 @@
-let RegionModel = require('./region');
+const {REGIONS} = require('./region');
 let request = require('request-promise');
 let cheerio = require('cheerio');
 let URL = require('url');
+let Promise = require('bluebird');
 
 const HOTS_LOGS = "http://www.hotslogs.com/";
 const HOTS_LOGS_API = "https://api.hotslogs.com/Public/";
 const HOTS_LOGS_DEFAULT_SORT = '-level';
 
 request = request.defaults({
-  "User-Agent" : "HOTSMPH_PLAYER"
+  "User-Agent" : "HOTSBA_PLAYER"
 });
 
-// PlayerId
+//AGGREGATORS - these wrap data calls and combine results.
+
+function getTopHeroesForPlayer(player, params) {
+  params = params || {};
+  let playerId = null;
+  if (isBattleTag(player)) {
+    playerId = getPlayerIdByBattleTag(player.replace('#', '_'), params.region);
+  } else {
+    playerId = getPlayerIdByName(player);
+  }
+  return playerId.then(getTopHeroesByPlayerId(params.limit, params.sort));
+}
+
+function getDetailsForPlayer(player, params) {
+  params = params || {};
+  return getPlayerId(player, params.region || REGIONS.US)
+  .then(function (id) {
+    return getPlayerDetails(id,params);
+  });
+}
+
+// PLAYER ID
+
+function getPlayerId(name, region) {
+  if (isBattleTag(name)) {
+    return getPlayerIdByBattleTag(name, region);
+  } else {
+    return getPlayerIdByName(name);
+  }
+}
 function getPlayerIdByName(name) {
   if (!name) {
     throw "getPlayerIdByName: invalid name supplied";
   }
-
   return request({uri : HOTS_LOGS + "PlayerSearch?Name=" + name, resolveWithFullResponse : true})
   .then(function (res) {
     let body = res.body;
@@ -38,8 +67,41 @@ function getPlayerIdByName(name) {
   });
 }
 
-function getHotsLogsPlayerDetails(battleTag, region) {
-  region = region || RegionModel.REGIONS.US;
+function getPlayerIdByBattleTag(battleTag, region) {
+  region = region || REGIONS.US;
+  return getHotsLogsPlayerDetailsByBattleTag(battleTag, region).then(
+    (data) => {
+      return parseInt(data.PlayerID);
+    }
+  );
+}
+
+//PLAYER DETAILS
+
+function getPlayerDetails(player, params) {
+  if (!player) {
+    throw 'getPlayerDetails - player supplied is null/undefined.';
+  }
+  let promise = null;
+  if (isBattleTag(player)) {
+    promise = getHotsLogsPlayerDetailsByBattleTag(battleTag, params.region).then(
+      (data) => {
+        return Promise.all([Promise.resolve(data), getPlayerProfile(data.PlayerID)]);
+      });
+  } else {
+    promise = Promise.all([getHotsLogsPlayerDetailsByPlayerId(player),getPlayerProfile(player)]);
+  }
+  return promise.spread((data,$) => {
+    let result = {};
+    result.rankings = getRankings(data);
+    result.heroes = getTopHeroes($, params.limit, params.sort);
+    result.roles = getRoles($);
+    return result;
+  })
+}
+
+function getHotsLogsPlayerDetailsByBattleTag(battleTag, region) {
+  region = region || REGIONS.US;
   if (!battleTag) {
     throw "getPlayerIdByBattleTag: battleTag not specified";
   }
@@ -53,25 +115,18 @@ function getHotsLogsPlayerDetails(battleTag, region) {
   });
 }
 
-function getPlayerIdByBattleTag(battleTag, region) {
-  return getHotsLogsPlayerDetails(battleTag, region).then(
+function getHotsLogsPlayerDetailsByPlayerId(playerId) {
+  if (!playerId) {
+    throw "getHotsLogsPlayerDetailsByPlayerId: playerId not specified.";
+  }
+  return request.get({ uri : HOTS_LOGS_API + "Players/" + playerId, json : true}).then(
     (data) => {
-      return parseInt(data.PlayerID);
+    if (!data|| data == "null") {
+      throw "Invalid Player Id given.";
     }
-  );
+    return data;
+  });
 }
-
-function getHeroSkill(hero) {
-  // returns a skill rating for a player x hero, normalized from 0 - 100
-
-  // naive approach that assumes both win % and level are scaled linearly
-  // and have the same relative weight.
-  let winPercent = hero.winPercent / 100.0;
-  let level = hero.level / 20.0;
-  return (level * winPercent) * 100;
-}
-
-// Heroes by Player
 
 function getPlayerProfile(id) {
   return request.get(HOTS_LOGS + "Player/Profile?PlayerID=" + id).then(
@@ -79,8 +134,22 @@ function getPlayerProfile(id) {
   );
 }
 
-// curried
+function getTopHeroesByPlayerId(limit, sort) {
+  return function(id) {
+    if (!id) {
+      throw "getTopHeroesByPlayerId: invalid id supplied";
+    }
+    return getPlayerProfile(id)
+    .then(
+      (body) => {
+        return getTopHeroes(body, limit, sort);
+      }
+    );
+  }
+}
 
+
+// PARSERS
 function getTopHeroes($, limit, sort) {
   limit = parseInt(limit) || 5;
   sort = sort || HOTS_LOGS_DEFAULT_SORT;
@@ -115,6 +184,18 @@ function getTopHeroes($, limit, sort) {
   return heroes;
 }
 
+function getRankings(data) {
+  let rankings = data.LeaderboardRankings;
+  let result = {};
+  for (ranking of rankings) {
+    let key = ranking.GameMode;
+    ranking.shortGameMode = shortenGameModeLabel(key);
+    delete ranking.GameMode;
+    result[key] = ranking;
+  }
+  return result;
+}
+
 function getRoles($) {
   let $roles = $('div.DivProfilePlayerRoleStatistic table');
   let roles = [];
@@ -138,64 +219,44 @@ function getRoles($) {
   return roles;
 }
 
-function getTopHeroesByPlayerId(limit, sort) {
-  return function(id) {
-    if (!id) {
-      throw "getTopHeroesByPlayerId: invalid id supplied";
-    }
-    return getPlayerProfile(id)
-    .then(
-      (body) => {
-        return getTopHeroes(body, limit, sort);
-      }
-    );
-  }
+// SKILL or how gud we think they are..
+function getHeroSkill(hero) {
+  // returns a skill rating for a player x hero, normalized from 0 - 100
+
+  // naive approach that assumes both win % and level are scaled linearly
+  // and have the same relative weight.
+  let winPercent = hero.winPercent / 100.0;
+  let level = hero.level / 20.0;
+  return (level * winPercent) * 100;
 }
 
-function getRankings(data) {
-  let rankings = data.LeaderboardRankings;
-  let result = {};
-  for (ranking of rankings) {
-    let key = ranking.GameMode;
-    delete ranking.GameMode;
-    result[key] = ranking;
+//UTIL
+
+function isBattleTag(value) {
+  if (!value) {
+    throw ('isBattleTag: value null/undefined.')
   }
-  return result;
-}
-function getTopPlayedHeroesByPlayerNameOrBattleTag(name, params) {
-  let playerId = null;
+  value = value.toString();
   // support name#id or name_id format
-  name = name.replace('#', '_');
-  if (name.indexOf('_') > 0) {
-    playerId = getPlayerIdByBattleTag(name, params.region);
-  } else {
-    playerId = getPlayerIdByName(name);
-  }
-  return playerId.then(getTopHeroesByPlayerId(params.limit, params.sort));
+  value = value.replace('#', '_');
+  return value.indexOf('_') > 0;
 }
 
-function getPlayerDetailsByBattleTag(battleTag, params) {
-  battleTag = battleTag.replace('#', '_');
-  return getHotsLogsPlayerDetails(battleTag, params.region).then(
-    (data) => {
-      return getPlayerProfile(data.PlayerID).then(
-        ($) => {
-          let result = {};
-          result.rankings = getRankings(data);
-          result.heroes = getTopHeroes($, params.limit, params.sort);
-          result.roles = getRoles($);
-          return result;
-        }
-      )
-    }
-  );
+function shortenGameModeLabel(gameMode) {
+  switch(gameMode) {
+    case "QuickMatch" : return "QM";
+    case "HeroLeague" : return "HL";
+    case "TeamLeague" : return "TL";
+    case "UnrankedDraft" : return "UD";
+    default: return "Unknown";
+  }
 }
 
 module.exports = {
-  getPlayerDetailsByBattleTag: getPlayerDetailsByBattleTag,
+  getDetailsForPlayer: getDetailsForPlayer,
   getPlayerIdByName : getPlayerIdByName,
   getPlayerIdByBattleTag : getPlayerIdByBattleTag,
   getTopHeroesByPlayerId : getTopHeroesByPlayerId,
-  getTopPlayedHeroesByPlayerNameOrBattleTag : getTopPlayedHeroesByPlayerNameOrBattleTag,
+  getTopHeroesForPlayer : getTopHeroesForPlayer,
   HOTS_LOGS_DEFAULT_SORT: HOTS_LOGS_DEFAULT_SORT
 };

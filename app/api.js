@@ -1,8 +1,8 @@
-let PlayerModel = require('./models/player');
-let RegionModel = require('./models/region');
+const PlayerModel = require('./models/player');
+const RegionModel = require('./models/region');
+const express = require('express');
 
-let express = require('express');
-var app = express();
+const app = express();
 
 app.get('/player/:name/heroes', function(req, res) {
   let defaultParams = {

@@ -1,4 +1,4 @@
-let PlayerModel = require(process.cwd() + '/models/player');
+let PlayerModel = require(process.cwd() + '/app/models/player');
 let expect = require('chai').expect;
 
 //hotslogs API requires _ instead of #.
@@ -22,7 +22,7 @@ describe('PlayerModel', function() {
   describe("#getTopHeroesByPlayerId", function () {
     it("should always get 5 heroes from by my own playerId.", function() {
       return expect(PlayerModel.getTopHeroesByPlayerId(HEROES_LIMIT)(MY_HOTSLOGS_PLAYER_ID))
-        .to.eventually.have.length(HEROES_LIMIT);
+        .to.eventually.have.lengthOf(HEROES_LIMIT);
     });
   });
   describe("#getPlayerIdByBattleTag", function () {
@@ -30,14 +30,20 @@ describe('PlayerModel', function() {
       return expect(PlayerModel.getPlayerIdByBattleTag(MY_BATTLETAG, 1)).to.eventually.equal(parseInt(MY_HOTSLOGS_PLAYER_ID));
     });
   });
-  describe("#getTopPlayedHeroesByPlayerNameOrBattleTag", function () {
+  describe("#getTopHeroesForPlayer", function () {
     it("should always get 5 heroes from by my own player name.", function() {
-      return expect(PlayerModel.getTopPlayedHeroesByPlayerNameOrBattleTag(MY_PLAYER_NAME, HEROES_LIMIT))
-        .to.eventually.have.length(HEROES_LIMIT);
+      return expect(PlayerModel.getTopHeroesForPlayer(MY_PLAYER_NAME, HEROES_LIMIT))
+        .to.eventually.have.lengthOf(HEROES_LIMIT);
     });
     it("should always get 5 heroes from by my own player battletag.", function() {
-      return expect(PlayerModel.getTopPlayedHeroesByPlayerNameOrBattleTag(MY_BATTLETAG, HEROES_LIMIT))
-        .to.eventually.have.length(HEROES_LIMIT);
+      return expect(PlayerModel.getTopHeroesForPlayer(MY_BATTLETAG, HEROES_LIMIT))
+        .to.eventually.have.lengthOf(HEROES_LIMIT);
+    });
+  });
+  describe("#getDetailsForPlayer", function () {
+    it("should always get 5 heroes from my own player details", function() {
+      return expect(PlayerModel.getDetailsForPlayer(MY_PLAYER_NAME, { region : 1, limit:HEROES_LIMIT}))
+        .to.eventually.have.property('heroes').with.lengthOf(HEROES_LIMIT)
     });
   });
 });

@@ -10,7 +10,7 @@ let URL = require('url');
 let Promise = require('bluebird');
 let async = require('async');
 request = request.defaults({
-  "User-Agent" : "HOTSMPH_HERO_IMAGE"
+  "User-Agent" : "HOTSBA_HERO_IMAGE"
 });
 
 const HOTS_LOGS_API_OPTS = {
@@ -37,7 +37,7 @@ function getHeroesJSONFromAPI() {
 };
 
 function readLocalImages() {
-  return fs.readdir(process.cwd() + "/ui/images/heroes");
+  return fs.readdir(__dirname + "/../ui/images/heroes");
 };
 
 //bread and butter.
@@ -95,7 +95,7 @@ function downloadAndDumpImages(imagePaths) {
     };
     return request(opts).then(function(body) {
       let fileName = parseImageFileNameFromPath(path);
-      return fs.writeFile(process.cwd() + "/ui/images/heroes/" + fileName, body).then(function () {
+      return fs.writeFile(__dirname + "/../ui/images/heroes/" + fileName, body).then(function () {
         console.log('file ' + fileName + " written");
       });
     });
@@ -108,10 +108,6 @@ function parseImageFileNameFromPath (path) {
     throw "Invalid image path supplied";
   }
   return path.substring(path.lastIndexOf('/') + 1, path.length);
-}
-
-function updateLocalHeroesJSON(heroesJSON) {
-  return fs.writeFile(process.cwd() + '/ui/js/heroes.json', JSON.stringify(heroesJSON));
 }
 
 module.exports = {

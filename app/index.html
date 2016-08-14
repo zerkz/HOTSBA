@@ -10,43 +10,46 @@
     <script src="./ui/js/jquery-3.1.0.min.js"></script>
     <script src="./ui/js/materialize.min.js"></script>
     <script src="http://twitter.github.com/hogan.js/builds/3.0.1/hogan-3.0.1.js"></script>
-    <script src="./ui/templates/heroes_table.js"> </script>
+    <script src="./ui/templates/player_details_table.js"> </script>
     <script src="./ui/templates/hero_input_container.js"> </script>
     <script src="./ui/templates/my_team_container.js"> </script>
     <script src="./ui/templates/enemy_team_container.js"> </script>
     <link href="./ui/css/materialize.min.css" rel="stylesheet" type="text/css"/>
+    <link href="./ui/css/hotsba.css" rel="stylesheet" type="text/css"/>
     <title>HOTSBA</title>
   </head>
   <body>
-
-    <div id="masterDiv">
+    <header>
       <nav>
         <div class="nav-wrapper light-blue darken-3">
-          <a href="#" class="brand-logo right">
+
+          <div class="brand-logo right" tabindex="-1">
             <img style="height:60px" class="responsive-img" src="./ui/images/logo.png"></img>
-          </a>
+          </div>
           <ul id="nav-mobile" class="left">
-            <li><a id="clearButton"class="waves-effect waves-light btn">Clear All</a></li>
-            <li id="enemiesTab" class="active"><a>Enemies</a></li>
-            <li id="alliesTab"><a>Allies</a></li>
+            <li><a id="clearButton"class="waves-effect waves-light btn" tabindex="-1">Clear All</a></li>
+            <li id="enemiesTab" class="active"><a tabindex="-1">Enemies</a></li>
+            <li id="alliesTab"><a tabindex="-1">Allies</a></li>
           </ul>
         </div>
       </nav>
+    </header>
+    <main>
       <div id="enemiesContainer"></div>
       <div id="alliesContainer" class="hide"></div>
-    </div>
+    </main>
+    <footer class="page-footer light-blue darken-3">
+      <div class="row">
+        <div class="white-text  col s6">
+            <span>2016 ZDWare LLC (zerkz)</span>
+            <div class="hide-on-small-only" id="versionHeader"></div>
+        </div>
+        <a class="col s2 right" href="http://www.hotslogs.com" tabindex="-1" target="_blank">
+          Powered By
+          <img class="responsive-img" src="./ui/images/hotslogs_logo.png"></img>
+        </a>
+      </div>
+    </footer>
     <script src="./ui/js/hotsba.js"></script>
-    <script>
-    let partial = { "hero_input_container" : templates["hero_input_container"]};
-    $('#enemiesContainer')
-      .append(templates["enemy_team_container"].render({"header-text-class" : "red-text"},partial));
-    $('#alliesContainer')
-      .append(templates["my_team_container"].render({"header-text-class" : "blue-text"},partial));
-    //click listeners..
-    $('#clearButton').click(clearAllHeroCollections);
-    $('#enemiesTab').click(showEnemiesTabSection);
-    $('#alliesTab').click(showAlliesTabSection);
-    newHeroesCheck();
-    </script>
   </body>
 </html>

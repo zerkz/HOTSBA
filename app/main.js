@@ -3,14 +3,19 @@ const {app, BrowserWindow} = electron;
 const config = require('convict');
 
 let win;
-let devMode = true;
+let devMode = false;
 
 
 app.on('ready', createMainWindow);
 
 function createMainWindow(width, height) {
   let primaryDisplay = electron.screen.getPrimaryDisplay();
-  win = new BrowserWindow({width: width, height: height, show : false})
+  win = new BrowserWindow({
+    width: width,
+    height: height,
+    show : false,
+    minWidth : 510
+  });
   win.loadURL(`file://${__dirname}/index.html`);
   if (devMode) {
     win.webContents.openDevTools();

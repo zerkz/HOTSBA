@@ -1,0 +1,31 @@
+<div class="player-details-table">
+  <table class="rankings-collection bordered">
+    <thead>
+      <th>Type</th>
+      <th>MMR</th>
+      <th>Rank</th>
+    </thead>
+    <tbody>
+    {{#rankings}}
+      <tr>
+        <td>{{shortGameMode}}</td>
+        <td>{{CurrentMMR}}</td>
+        {{#LeagueRank}}
+          <td><span class="league-rank">#{{LeagueRank}}</span></td>
+        {{/LeagueRank}}
+      </tr>
+    {{/rankings}}
+    </tbody>
+  </table>
+  <ul class="collection heroes-collection">
+    {{#heroes}}
+    <li class="collection-item avatar hero">
+     <img src="ui/images/heroes/{{imageName}}.png" alt="" class="circle">
+     <p class="title">{{name}}</p>
+     <p>{{gamesPlayed}} won.</p>
+     <p class="{{winPercentColor}}">{{winPercent}}</p>
+   </li>
+    {{/heroes}}
+    {{^heroes}}No Heroes Found :({{/heroes}}
+  </ul>
+</div>

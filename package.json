@@ -1,28 +1,39 @@
 {
-  "name": "hots-mph",
-  "version": "1.0.0",
-  "description": "Tool built on node-webkit for getting top played heroes for players, using HOTSLogs as a data source.",
-  "main": "main.js",
+  "name": "hotsba-builder",
+  "version": "0.9.0",
+  "description": "A draft helper/ban aid for Heroes of the Storm.",
+  "build" : {
+    "appId": "com.zdware.hotsba",
+    "category" : "public.app-category.games",
+    "asar" : "false",
+    "win" : {
+      "iconURL" : "https://doc-14-9g-docs.googleusercontent.com/docs/securesc/e5fe00uf2vf6ds5cnff6crsa5u9k5pud/beqffha2sln0qt1icvccin05r6vp83hm/1471147200000/02641626794375479226/02641626794375479226/0BwufwJ0RwTicRlNMS1V6cFh2Q0U?e=download"
+    },
+    "dmg" : {
+
+    }
+  },
   "scripts": {
-    "start": "electron .",
-    "api": "node api.js",
+    "start": "electron ./app/",
+    "api": "node ./app/api.js",
+    "postinstall": "install-app-deps",
     "test": "mocha test",
-    "genTemplates": "hulk ./ui/templates/*.mustache -o ./ui/templates/"
+    "genTemplates": "hulk ./app/ui/templates/*.mustache -o ./app/ui/templates/",
+    "pack": "build --dir",
+    "dist": "build"
   },
   "author": "Zack Whipkey (ZDWare.com), Anthony Leontiev",
-  "license": "ISC",
+  "license": "GPL-3.0",
   "engines": {
     "node": ">=6.1.0"
   },
-  "dependencies": {
-    "async": "^2.0.1",
+  "devDependencies": {
     "chai": "^3.5.0",
     "chai-as-promised": "^5.3.0",
-    "cheerio": "^0.20.0",
-    "convict": "^1.4.0",
-    "express": "^4.14.0",
-    "fs-promise": "^0.5.0",
-    "request": "^2.73.0",
-    "request-promise": "^4.0.2"
+    "eslint": "^3.3.0",
+    "eslint-config-airbnb": "^10.0.1",
+    "eslint-plugin-import": "^1.13.0",
+    "eslint-plugin-jsx-a11y": "^2.1.0",
+    "eslint-plugin-react": "^6.0.0"
   }
 }
