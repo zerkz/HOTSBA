@@ -41,7 +41,7 @@ function newHeroesCheck() {
 }
 
 function clearAllHeroCollections() {
-  $('.heroes-collection').replaceWith($('<div class="heroes-container"></div>'));
+  $('.' + playerDetailsClass).replaceWith($('<div class="' + playerDetailsClass + '"></div>'));
   $('.player-text-input').val('');
 }
 
