@@ -16,7 +16,6 @@ before_install:
 install:
 - nvm install 6.1.0
 - npm install
-- npm prune
 
 script:
 - npm run dist-mac
