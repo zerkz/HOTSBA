@@ -9,6 +9,8 @@ addons:
       - icnsutils
       - graphicsmagick
       - xz-utils
+      - rpm
+      - bsdtar
 
 cache:
   directories:
