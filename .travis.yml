@@ -20,7 +20,6 @@ before_install:
 
 install:
 - nvm install 6.1.0
-- npm install npm -g
 - npm install
 
 script:
