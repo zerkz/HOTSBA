@@ -10,6 +10,9 @@ cache:
   - $HOME/.electron
   - $HOME/.cache
 
+before_install:
+- "npm set config optional true"
+
 install:
 - nvm install 6.1.0
 - npm install
