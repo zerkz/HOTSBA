@@ -15,7 +15,6 @@ install:
   - ps: Install-Product node 6.1.0 x64
   - git reset --hard HEAD
   - npm install npm -g
-  - npm install electron-builder -g
   - npm install
   - npm prune
 
