@@ -21,7 +21,7 @@
     "pack": "build --dir",
     "dist": "build"
   },
-  "author": "Zack Whipkey (ZDWare.com), Anthony Leontiev",
+  "author": "Zack Whipkey <admin@hotsba.com> (http://zdware.com/)",
   "license": "GPL-3.0",
   "engines": {
     "node": ">=6.1.0"
