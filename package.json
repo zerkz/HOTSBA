@@ -37,7 +37,6 @@
     "electron-builder": "^5.25.1",
     "mocha": "^3.0.2",
     "eslint": "^3.3.0",
-    "appdmg": "^0.4.5",
     "eslint-config-airbnb": "^10.0.1",
     "eslint-plugin-import": "^1.13.0",
     "eslint-plugin-jsx-a11y": "^2.1.0",
