@@ -10,7 +10,10 @@
     "win": {
       "iconURL": "https://doc-14-9g-docs.googleusercontent.com/docs/securesc/e5fe00uf2vf6ds5cnff6crsa5u9k5pud/beqffha2sln0qt1icvccin05r6vp83hm/1471147200000/02641626794375479226/02641626794375479226/0BwufwJ0RwTicRlNMS1V6cFh2Q0U?e=download"
     },
-    "dmg": {}
+    "dmg": {
+      "title" : "HOTSBA"
+    },
+    "linux" : false
   },
   "scripts": {
     "start": "electron ./app/",
