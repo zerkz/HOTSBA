@@ -11,7 +11,7 @@
       "iconURL": "https://doc-14-9g-docs.googleusercontent.com/docs/securesc/e5fe00uf2vf6ds5cnff6crsa5u9k5pud/beqffha2sln0qt1icvccin05r6vp83hm/1471147200000/02641626794375479226/02641626794375479226/0BwufwJ0RwTicRlNMS1V6cFh2Q0U?e=download"
     },
     "dmg": {
-      "title" : "HOTSBA"
+      "title": "HOTSBA"
     }
   },
   "scripts": {
@@ -22,8 +22,8 @@
     "genTemplates": "hulk ./app/ui/templates/*.mustache -o ./app/ui/templates/",
     "pack": "build --dir",
     "dist": "build",
-    "dist-win" : "build -win",
-    "dist-mac" : "build -osx"
+    "dist-win": "build --win",
+    "dist-mac": "build --osx"
   },
   "author": "Zack Whipkey <admin@hotsba.com> (http://zdware.com/)",
   "license": "GPL-3.0",
@@ -37,6 +37,7 @@
     "electron-builder": "^5.25.1",
     "mocha": "^3.0.2",
     "eslint": "^3.3.0",
+    "appdmg": "^0.4.5",
     "eslint-config-airbnb": "^10.0.1",
     "eslint-plugin-import": "^1.13.0",
     "eslint-plugin-jsx-a11y": "^2.1.0",
