@@ -21,9 +21,7 @@
     "test": "mocha test",
     "genTemplates": "hulk ./app/ui/templates/*.mustache -o ./app/ui/templates/",
     "pack": "build --dir",
-    "dist": "build",
-    "dist-win": "build --win",
-    "dist-mac": "build --osx"
+    "dist": "build"
   },
   "author": "Zack Whipkey <admin@hotsba.com> (http://zdware.com/)",
   "license": "GPL-3.0",
