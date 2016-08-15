@@ -21,4 +21,4 @@ install:
 build_script:
   - node --version
   - npm --version
-  - npm run dist-win
+  - npm run dist
