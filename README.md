@@ -1,13 +1,13 @@
 # HOTSBA
 
-## [Want to use/download HOTSBA?](https://github.com/zerkz/HOTSBA/releases)
-
-## Want to develop on/customize HOTSBA?
+## Downloads
+* [Windows x64](https://goo.gl/WVWLUi)
+* [OS X](https://goo.gl/XB5SYt)
 
 # NPM scripts
-* npm start - starts up HOTSBA by app directory.
+* npm start - starts up HOTSBA locally, in development mode (auto updater is diabled..)
 * npm run genTemplates - generates all of the mustache templates in `app/ui/templates`
-* npm run dist - builds installers for OSX and Windows (requires dependencies...)
+* npm run dist - builds installers, for your current platform.
 
 # FAQ
 
