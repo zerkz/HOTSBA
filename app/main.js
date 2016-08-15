@@ -16,7 +16,7 @@ let win;
 let devMode = (process.env.NODE_ENV == 'development') || (argv.NODE_ENV == 'development');
 
 if (!devMode) {
-  updateFeed = os === 'darwin' ? undefined : winUpdateFeed;
+  updateFeed = os === 'darwin' ? osxUpdateFeed : winUpdateFeed;
 }
 
 function checkForUpdatesAndStart() {
