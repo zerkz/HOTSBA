@@ -14,8 +14,8 @@ let devMode = (process.env.NODE_ENV == 'development') || (argv.NODE_ENV == 'deve
 
 if (!devMode) {
   updateFeed = os === 'darwin' ?
-    'https://hotsba-nuts.herokuapp.com/updates/latest' :
-    'https://hotsba-nuts.herokuapp.com//releases/win32';
+    'https://hotsba-nuts.herokuapp.com/download/latest/osx' :
+    'https://hotsba-nuts.herokuapp.com/download/latest/win';
 }
 
 function checkForUpdatesAndStart() {
@@ -57,8 +57,8 @@ function checkForUpdatesAndStart() {
 
     autoUpdater.addListener("error", (error) => {
       fs.writeFileSync('error.log', error);
-      dialog.showErrorBox("HOTSBA Exploded :(", "An error log was generated at " + process.cwd());
-      app.quit();
+      dialog.showErrorBox("HOTSBA Updater Exploded :(", "An error log was generated at " + process.cwd());
+      createMainWindow();
     });
 
     autoUpdater.checkForUpdates();
