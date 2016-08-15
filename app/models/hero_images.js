@@ -44,23 +44,22 @@ function readLocalImages() {
 function checkIfHeroesNeedDownloaded() {
   return Promise.join(getCloudFrontHost(), getHeroesJSONFromAPI(), readLocalImages(),
   function (cloudFrontHost, heroesJSON, localImageFiles) {
+    localImageFiles = localImageFiles.filter(image => (image.indexOf(".png") >= 0));
     //we have to subtract 1 because of .gitignore...
-    if (heroesJSON.length == (localImageFiles.length - 1)) {
+    if (localImageFiles.length == 0) {
+      //fresh run, download all the things!
+      let paths = getHeroImagePaths(heroesJSON, cloudFrontHost);
+      return downloadAndDumpImages(paths).return(generateResult("All Hero Images downloaded!"));
+    } else if (heroesJSON.length == localImageFiles.length) {
       //we're good to go!
       return Promise.resolve(generateResult("No New Heroes!"));
-    } else {
-      if(heroesJSON.length > localImageFiles.length) {
+    } else if (heroesJSON.length > localImageFiles.length) {
         //new heroes released since last run? lets filter them out and grab the images
         let newHeroesJSON = heroesJSON.filter(function (hero) {
-          return !localImageFiles.includes(hero.imageURL + ".png");
+          return !localImageFiles.includes(hero.ImageURL + ".png");
         });
         return downloadAndDumpImages(getHeroImagePaths(newHeroesJSON, cloudFrontHost))
           .return(generateResult("New Heroes Added: " + newHeroesJSON.map(getHeroName).join(', ')));
-      } else {
-        //fresh run, download all the things!
-        let paths = getHeroImagePaths(heroesJSON, cloudFrontHost);
-        return downloadAndDumpImages(paths).return(generateResult("All Hero Images downloaded!"));
-      }
     }
 
     function generateResult(message) {
@@ -81,7 +80,6 @@ function getHeroImagePaths(heroesJSON, cloudFrontHost) {
 
 function constructImageURL(imageName, cloudFrontHost) {
   let imagePath = "http://" + cloudFrontHost + "/Images/Heroes/Portraits/"  + imageName + ".png";
-  console.log(imagePath);
   return imagePath;
 }
 
@@ -95,7 +93,6 @@ function downloadAndDumpImages(imagePaths) {
     return request(opts).then(function(body) {
       let fileName = parseImageFileNameFromPath(path);
       return fs.writeFile(__dirname + "/../ui/images/heroes/" + fileName, body).then(function () {
-        console.log('file ' + fileName + " written");
       });
     });
   });

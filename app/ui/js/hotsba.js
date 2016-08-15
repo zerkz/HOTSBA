@@ -92,7 +92,7 @@ function getColorForWinPercentage(winPercent) {
   if (winPercent >= 70.0){return 'red-text darken-4-text';}
   if (winPercent >= 55.0) {return 'orange-text darken-4-text';}
   if (winPercent >= 50.0) {return 'orange-text';}
-  if (winPercent >= 45.0) {return 'lime-text';}
+  if (winPercent >= 45.0) {return 'green-text darken-2-text';}
   if (winPercent >= 40.0) {return 'green-text';}
   if (winPercent < 40.0) {return 'green-text lighten-2-text';}
 }
