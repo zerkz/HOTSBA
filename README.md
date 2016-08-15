@@ -1,6 +1,6 @@
 # HOTSBA
 
-## [Want to use/download HOTSBA?]https://github.com/zerkz/HOTSBA/releases
+## [Want to use/download HOTSBA?](https://github.com/zerkz/HOTSBA/releases)
 
 ## Want to develop on/customize HOTSBA?
 
