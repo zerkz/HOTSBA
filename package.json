@@ -15,7 +15,7 @@
     }
   },
   "scripts": {
-    "start": "electron ./app/",
+    "start": "electron ./app/ --NODE_ENV=development",
     "api": "node ./app/api.js",
     "postinstall": "install-app-deps",
     "test": "mocha test",
