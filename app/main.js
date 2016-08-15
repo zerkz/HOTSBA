@@ -9,8 +9,8 @@ const width = 800;
 const height = 600;
 let updateFeed;
 
-const osxUpdateFeed = 'https://hotsba-nuts.herokuapp.com/download/latest/osx';
-const winUpdateFeed = 'https://hotsba-nuts.herokuapp.com/download/latest/win';
+const osxUpdateFeed = 'https://hotsba-nuts.herokuapp.com/update/osx/';
+const winUpdateFeed = 'https://hotsba-nuts.herokuapp.com/update/win/';
 
 let win;
 let devMode = (process.env.NODE_ENV == 'development') || (argv.NODE_ENV == 'development');
@@ -25,7 +25,7 @@ function checkForUpdatesAndStart() {
   } else {
     let updateWindow = new BrowserWindow({width: 300, height: 300, frame: false, show:false})
 
-    autoUpdater.setFeedURL(updateFeed + "?v=" + app.getVersion());
+    autoUpdater.setFeedURL(updateFeed + app.getVersion());
 
     autoUpdater.addListener("checking-for-update", (event) => {
       updateWindow.show();
