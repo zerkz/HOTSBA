@@ -9,13 +9,14 @@ const width = 800;
 const height = 600;
 let updateFeed;
 
+const osxUpdateFeed = 'https://hotsba-nuts.herokuapp.com/download/latest/osx';
+const winUpdateFeed = 'https://hotsba-nuts.herokuapp.com/download/latest/win';
+
 let win;
 let devMode = (process.env.NODE_ENV == 'development') || (argv.NODE_ENV == 'development');
 
 if (!devMode) {
-  updateFeed = os === 'darwin' ?
-    'https://hotsba-nuts.herokuapp.com/download/latest/osx' :
-    'https://hotsba-nuts.herokuapp.com/download/latest/win';
+  updateFeed = os === 'darwin' ? undefined : winUpdateFeed;
 }
 
 function checkForUpdatesAndStart() {
