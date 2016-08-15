@@ -57,6 +57,7 @@ function checkForUpdatesAndStart() {
     });
 
     autoUpdater.addListener("error", (error) => {
+      updateWindow.destroy();
       fs.writeFileSync('error.log', error);
       dialog.showErrorBox("HOTSBA Updater Exploded :(", "An error log was generated at " + process.cwd());
       createMainWindow();

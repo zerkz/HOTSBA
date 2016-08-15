@@ -7,9 +7,6 @@
     "appId": "com.zdware.hotsba",
     "category": "public.app-category.games",
     "asar": false,
-    "win": {
-      "iconURL": "https://doc-14-9g-docs.googleusercontent.com/docs/securesc/e5fe00uf2vf6ds5cnff6crsa5u9k5pud/beqffha2sln0qt1icvccin05r6vp83hm/1471147200000/02641626794375479226/02641626794375479226/0BwufwJ0RwTicRlNMS1V6cFh2Q0U?e=download"
-    },
     "dmg": {
       "title": "HOTSBA"
     }
@@ -24,6 +21,7 @@
     "dist": "build"
   },
   "author": "Zack Whipkey <admin@hotsba.com> (http://zdware.com/)",
+  "year" : 2016,
   "license": "GPL-3.0",
   "engines": {
     "node": ">=6.1.0"
