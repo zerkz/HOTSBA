@@ -1,7 +1,7 @@
 {
   "name": "hotsba",
   "productName": "HOTSBA",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "homepage": "www.hotsba.com",
   "description": "A draft helper/ban aid for Heroes of the Storm.",
   "main": "main.js",

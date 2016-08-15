@@ -9,13 +9,14 @@ const width = 800;
 const height = 600;
 let updateFeed;
 
+const osxUpdateFeed = 'https://hotsba-nuts.herokuapp.com/update/osx/';
+const winUpdateFeed = 'https://hotsba-nuts.herokuapp.com/update/win/';
+
 let win;
 let devMode = (process.env.NODE_ENV == 'development') || (argv.NODE_ENV == 'development');
 
 if (!devMode) {
-  updateFeed = os === 'darwin' ?
-    'https://hotsba-nuts.herokuapp.com/updates/latest' :
-    'https://hotsba-nuts.herokuapp.com//releases/win32';
+  updateFeed = os === 'darwin' ? osxUpdateFeed : winUpdateFeed;
 }
 
 function checkForUpdatesAndStart() {
@@ -24,7 +25,7 @@ function checkForUpdatesAndStart() {
   } else {
     let updateWindow = new BrowserWindow({width: 300, height: 300, frame: false, show:false})
 
-    autoUpdater.setFeedURL(updateFeed + "?v=" + app.getVersion());
+    autoUpdater.setFeedURL(updateFeed + app.getVersion());
 
     autoUpdater.addListener("checking-for-update", (event) => {
       updateWindow.show();
@@ -56,9 +57,10 @@ function checkForUpdatesAndStart() {
     });
 
     autoUpdater.addListener("error", (error) => {
+      updateWindow.destroy();
       fs.writeFileSync('error.log', error);
-      dialog.showErrorBox("HOTSBA Exploded :(", "An error log was generated at " + process.cwd());
-      app.quit();
+      dialog.showErrorBox("HOTSBA Updater Exploded :(", "An error log was generated at " + process.cwd());
+      createMainWindow();
     });
 
     autoUpdater.checkForUpdates();
