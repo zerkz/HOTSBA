@@ -24,11 +24,12 @@ function checkForUpdatesAndStart() {
     createMainWindow();
   } else {
     let updateWindow = new BrowserWindow({width: 300, height: 300, frame: false, show:false})
-
+    updateWindow.loadURL(`file://${__dirname}/updateCheck.html`);
+    updateWindow.show();
     autoUpdater.setFeedURL(updateFeed + app.getVersion());
 
     autoUpdater.addListener("checking-for-update", (event) => {
-      updateWindow.show();
+      //updateWindow.show();
     });
 
     autoUpdater.addListener("update-not-available", (event) => {
@@ -62,8 +63,8 @@ function checkForUpdatesAndStart() {
       dialog.showErrorBox("HOTSBA Updater Exploded :(", "An error log was generated at " + process.cwd());
       createMainWindow();
     });
-
     autoUpdater.checkForUpdates();
+
   }
 
   function createMainWindow() {
@@ -81,15 +82,16 @@ function checkForUpdatesAndStart() {
     win.once('ready-to-show', () => {
       win.show()
     });
+    app.on('window-all-closed', function() {
+      app.quit();
+    });
+
+    app.on('will-quit', saveConfigs);
   }
 }
 
-
 app.on('ready', checkForUpdatesAndStart);
 
-
-
-app.on('will-quit', saveConfigs);
 
 function saveConfigs () {
   //save screen stuff to configs before closing.
