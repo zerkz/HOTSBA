@@ -46,6 +46,8 @@ Designers feel free to come up with an nice gif to show during install!
 I know. Just imagine it as an H next a man trapped inside of a bandaid.
 
 ## Shoutouts
-Thanks to arc (some dev help), and imnasti (testing/feedback)
+Thanks to arc (some dev help), and imnasti (testing/feedback).
+
+Thanks to Ben @ HOTSLOGS for being open and communicating with me!
 
 Shoutouts to the players I commonly run into in TL or HL!
