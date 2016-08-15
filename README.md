@@ -6,6 +6,8 @@
 * [Windows x64](https://goo.gl/WVWLUi)
 * [OS X](https://goo.gl/XB5SYt)
 
+![screenshot](https://drive.google.com/uc?export=download&id=0BwufwJ0RwTiccUtZNWdPQWN0dFk)
+
 # NPM scripts
 * npm start - starts up HOTSBA locally, in development mode (auto updater is diabled..)
 * npm run genTemplates - generates all of the mustache templates in `app/ui/templates`
