@@ -1,4 +1,6 @@
 # HOTSBA
+[![Build Status](https://travis-ci.org/zerkz/HOTSBA.svg?branch=master)](https://travis-ci.org/zerkz/HOTSBA)
+[![Build status](https://ci.appveyor.com/api/projects/status/qyvtkswriw4x0uyo?svg=true)](https://ci.appveyor.com/project/zerkz/hotsba)
 
 ## Downloads
 * [Windows x64](https://goo.gl/WVWLUi)
