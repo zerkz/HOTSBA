@@ -54,6 +54,7 @@ Please send feedback/suggestions to [admin@hotsba.com](admin@hotsba.com)
 
 # Can I Donate?
 Sure! I incurred some costs, like getting an Apple Developer subscription so that the OS X auto updater would work (apps must be signed!) 
+
 [![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=JNFF7KKQLGVC4)
 
 # Developer Stuff
