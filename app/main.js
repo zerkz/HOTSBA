@@ -26,8 +26,6 @@ function checkForUpdatesAndStart() {
   } else {
     let updateWindow = new BrowserWindow({width: 300, height: 300, frame: false, show:false})
     updateWindow.loadURL(`file://${__dirname}/updateCheck.html`);
-    updateWindow.show();
-    dialog.showErrorBox("feedurl for " + os, updateFeed + app.getVersion());
     autoUpdater.setFeedURL(updateFeed + app.getVersion());
 
     autoUpdater.addListener("checking-for-update", (event) => {
