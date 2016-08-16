@@ -22,7 +22,7 @@ Heroes Of The Storm Ban Aid. Used to be named hotsMPH (most played heroes). The 
 to make the atrocious icon you see :P
 
 ## Does HOTSLOGS know about this?
-I've been communicating with Ben from HOTSLOGS. And I got his permission for the "Powered By" snippet at the footer. Without data from HOTSLOGS, this tool would be nothing, so props to them!
+I've been communicating with Ben from HOTSLOGS. And I got his permission for the "Powered By" snippet at the footer. Without data from HOTSLOGS, this tool would be nothing, so props to him!
 
 ## Will I get banned for using this?
 Never say never, but this is no different than loading up HOTSLOGS.com, and searching your enemies at the draft screen. HOTSBA does not read memory, or interact with the HOTS executable in any way.
@@ -45,7 +45,12 @@ so I haven't had time to make a .gif that doesn't seem completely different from
 Designers feel free to come up with an nice gif to show during install!
 
 ## Dude... this icon....
-I know. Just imagine it as an H next a man trapped inside of a bandaid.
+I know. Just imagine it as an H next a man trapped inside of a bandaid. #programmer_art
+
+If you're a designer and you would like to help with some of the graphics, please reach out!
+
+# Feedback
+Please send feedback/suggestions to [admin@hotsba.com](admin@hotsba.com)
 
 # Developer Stuff
 
