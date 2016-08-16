@@ -2,9 +2,10 @@
 if(require('electron-squirrel-startup')) return;
 const argv = require('minimist')(process.argv.slice(2));
 const electron = require('electron');
-const {app, BrowserWindow, dialog, autoUpdater, os} = electron;
+const {app, BrowserWindow, dialog, autoUpdater} = electron;
 const config = require('convict');
 const fs = require('fs');
+const os = require('os').platform();
 const width = 800;
 const height = 600;
 let updateFeed;
@@ -26,28 +27,29 @@ function checkForUpdatesAndStart() {
     let updateWindow = new BrowserWindow({width: 300, height: 300, frame: false, show:false})
     updateWindow.loadURL(`file://${__dirname}/updateCheck.html`);
     updateWindow.show();
+    dialog.showErrorBox("feedurl for " + os, updateFeed + app.getVersion());
     autoUpdater.setFeedURL(updateFeed + app.getVersion());
 
     autoUpdater.addListener("checking-for-update", (event) => {
-      //updateWindow.show();
+      updateWindow.show();
     });
 
     autoUpdater.addListener("update-not-available", (event) => {
       updateWindow.destroy();
       createMainWindow();
     });
-    autoUpdater.addListener("update-downloaded", (event) => {
+    autoUpdater.addListener("update-downloaded", (event, releaseNotes, releaseName) => {
       //so metal.
       updateWindow.destroy();
-      dialog.showMessageBox(null, {
+      dialog.showMessageBox({
         type: "question",
         buttons : ["Update", "Do Not Update"],
-        default : 0,
+        defaultId : 0,
         cancelId : 1,
         title : "HOTSBA Update Available!",
-        message : "An update to HOTSBA is available (" + event.releaseName + ")."
+        message : "An update to HOTSBA is available (" + releaseName + ")."
       }, function (index) {
-        if (index = 0) {
+        if (index == 0) {
           //accepted update
           autoUpdater.quitAndInstall();
         } else {
