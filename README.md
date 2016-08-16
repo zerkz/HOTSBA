@@ -8,12 +8,14 @@
 
 ![screenshot](https://drive.google.com/uc?export=download&id=0BwufwJ0RwTiccUtZNWdPQWN0dFk)
 
-# NPM scripts
-* npm start - starts up HOTSBA locally, in development mode (auto updater is diabled..)
-* npm run genTemplates - generates all of the mustache templates in `app/ui/templates`
-* npm run dist - builds installers, for your current platform.
-
 # FAQ
+
+## How Do I Use HOTSBA?
+Download an installer from above, run it! After sometime (and update checking), HOTSBA will appear.
+
+Simply click in a textbox under "Player", enter in someones name, hit "TAB", and it will query for their rankings/most played/skilled heroes!
+
+Repeat until you have the enemy team mapped out! Also available is an "Allies" team, incase you want to see what they play!
 
 ## WTF does HOTSBA it stand for?
 Heroes Of The Storm Ban Aid. Used to be named hotsMPH (most played heroes). The name allowed me
@@ -45,8 +47,15 @@ Designers feel free to come up with an nice gif to show during install!
 ## Dude... this icon....
 I know. Just imagine it as an H next a man trapped inside of a bandaid.
 
-## Shoutouts
-Thanks to arc (some dev help), and imnasti (testing/feedback).
+# Developer Stuff
+
+## NPM scripts
+* npm start - starts up HOTSBA locally, in development mode (auto updater is diabled..)
+* npm run genTemplates - generates all of the mustache templates in `app/ui/templates`
+* npm run dist - builds installers, for your current platform.
+
+# Shoutouts
+Thanks to arc (some dev help), and all my friends who helped me test.
 
 Thanks to Ben @ HOTSLOGS for being open and communicating with me!
 
