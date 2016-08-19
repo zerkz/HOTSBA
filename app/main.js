@@ -12,12 +12,22 @@ let updateFeed;
 
 const osxUpdateFeed = 'https://hotsba-nuts.herokuapp.com/update/osx/';
 const winUpdateFeed = 'https://hotsba-nuts.herokuapp.com/update/win/';
+const proxy = config.proxy;
 
 let win;
 let devMode = (process.env.NODE_ENV == 'development') || (argv.NODE_ENV == 'development');
 
 if (!devMode) {
   updateFeed = os === 'darwin' ? osxUpdateFeed : winUpdateFeed;
+}
+
+if (proxy && proxy.enabled) {
+  let proxyURL = proxy.protocol + "://";
+  if (proxy.username && proxy.password) {
+    proxyURL += proxy.username + ":" + proxy.password + "@";
+  }
+  proxyURL += proxy.host + ":" + proxy.port;
+  app.commandLine.appendSwitch('proxy-server', proxyURL);
 }
 
 function checkForUpdatesAndStart() {

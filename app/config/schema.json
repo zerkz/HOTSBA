@@ -11,9 +11,10 @@
       "default": 600
     }
   },
-  "mode" : {
-    "doc" : "Which mode hotsba should run in (enemy team or both teams)",
-    "format" : "String",
-    "default" : "enemyOnly"
-  }
+  "proxy" : {
+    "host" : "string",
+    "port" : "int",
+    "username" : "string",
+    "password" : "string"
+   }
 }
