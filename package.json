@@ -1,6 +1,6 @@
 {
   "name": "hotsba",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A draft helper/ban aid for Heroes of the Storm.",
   "repository": "https://github.com/zerkz/HOTSBA",
   "build": {
@@ -15,13 +15,14 @@
     "start": "electron ./app/ --NODE_ENV=development",
     "api": "node ./app/api.js",
     "postinstall": "install-app-deps",
+    "postversion": "npm --prefix ./app version $npm_package_version",
     "test": "mocha test",
     "genTemplates": "hulk ./app/ui/templates/*.mustache -o ./app/ui/templates/",
     "pack": "build --dir",
     "dist": "build"
   },
   "author": "Zack Whipkey <admin@hotsba.com> (http://zdware.com/)",
-  "year" : 2016,
+  "year": 2016,
   "license": "GPL-3.0",
   "engines": {
     "node": ">=6.1.0"

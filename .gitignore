@@ -1,6 +1,10 @@
 # Created by https://www.gitignore.io/api/git,node,osx
+
 #electron distribution directory.
 dist
+
+#npm prefix bug...
+app/etc
 
 ### Git ###
 *.orig
