@@ -15,7 +15,6 @@
     "start": "electron ./app/ --NODE_ENV=development",
     "api": "node ./app/api.js",
     "postinstall": "install-app-deps",
-    "postversion": "npm --prefix ./app version $npm_package_version",
     "test": "mocha test",
     "genTemplates": "hulk ./app/ui/templates/*.mustache -o ./app/ui/templates/",
     "pack": "build --dir",
