@@ -17,6 +17,9 @@ Simply click in a textbox under "Player", enter in someones name, hit "TAB", and
 
 Repeat until you have the enemy team mapped out! Also available is an "Allies" team, incase you want to see what they play!
 
+## What benefit do I gain over HotsStats/HotsLogs Uploader?
+HOTSBA is meant to be used during the draft phase. Both of the above tools currently do not present any information until the loading screen/after draft has happened.
+
 ## WTF does HOTSBA it stand for?
 Heroes Of The Storm Ban Aid. Used to be named hotsMPH (most played heroes). The name allowed me
 to make the atrocious icon you see :P
