@@ -48,7 +48,7 @@ so I haven't had time to make a .gif that doesn't seem completely different from
 Designers feel free to come up with an nice gif to show during install!
 
 ## Dude... this icon....
-I know. Just imagine it as an H next a man trapped inside of a bandaid. #programmer_art
+I know. Just imagine it as an H next to a man trapped inside of a bandaid. #programmer_art
 
 If you're a designer and you would like to help with some of the graphics, please reach out!
 
