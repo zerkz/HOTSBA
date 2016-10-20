@@ -11,6 +11,8 @@
     "node": ">=6.1.0"
   },
   "dependencies": {
+    "async": "^2.1.2",
+    "bluebird": "^3.4.6",
     "cheerio": "^0.20.0",
     "convict": "^1.4.0",
     "electron-squirrel-startup": "^1.0.0",
