@@ -1,4 +1,4 @@
-# HOTSBA
+# HOTSBA - **H**eroes **o**f **t**he **S**torm **B**an **A**id
 [![Build Status](https://travis-ci.org/zerkz/HOTSBA.svg?branch=master)](https://travis-ci.org/zerkz/HOTSBA)
 [![Build status](https://ci.appveyor.com/api/projects/status/qyvtkswriw4x0uyo?svg=true)](https://ci.appveyor.com/project/zerkz/hotsba)
 
@@ -8,19 +8,24 @@
 
 ![screenshot](https://drive.google.com/uc?export=download&id=0BwufwJ0RwTiccUtZNWdPQWN0dFk)
 
-# NPM scripts
-* npm start - starts up HOTSBA locally, in development mode (auto updater is diabled..)
-* npm run genTemplates - generates all of the mustache templates in `app/ui/templates`
-* npm run dist - builds installers, for your current platform.
-
 # FAQ
+
+## How Do I Use HOTSBA?
+Download an installer from above, run it! After sometime (and update checking), HOTSBA will appear.
+
+Simply click in a textbox under "Player", enter in someones name, hit "TAB", and it will query for their rankings/most played/skilled heroes!
+
+Repeat until you have the enemy team mapped out! Also available is an "Allies" team, incase you want to see what they play!
+
+## What benefit do I gain over HotsStats/HotsLogs Uploader?
+HOTSBA is meant to be used during the draft phase. Both of the above tools currently do not present any information until the loading screen/after draft has happened.
 
 ## WTF does HOTSBA it stand for?
 Heroes Of The Storm Ban Aid. Used to be named hotsMPH (most played heroes). The name allowed me
 to make the atrocious icon you see :P
 
 ## Does HOTSLOGS know about this?
-I've been communicating with Ben from HOTSLOGS. And I got his permission for the "Powered By" snippet at the footer. Without data from HOTSLOGS, this tool would be nothing, so props to them!
+I've been communicating with Ben from HOTSLOGS. And I got his permission for the "Powered By" snippet at the footer. Without data from HOTSLOGS, this tool would be nothing, so props to him!
 
 ## Will I get banned for using this?
 Never say never, but this is no different than loading up HOTSLOGS.com, and searching your enemies at the draft screen. HOTSBA does not read memory, or interact with the HOTS executable in any way.
@@ -43,10 +48,27 @@ so I haven't had time to make a .gif that doesn't seem completely different from
 Designers feel free to come up with an nice gif to show during install!
 
 ## Dude... this icon....
-I know. Just imagine it as an H next a man trapped inside of a bandaid.
+I know. Just imagine it as an H next to a man trapped inside of a bandaid. #programmer_art
 
-## Shoutouts
-Thanks to arc (some dev help), and imnasti (testing/feedback).
+If you're a designer and you would like to help with some of the graphics, please reach out!
+
+# Feedback
+Please send feedback/suggestions to [admin@hotsba.com](admin@hotsba.com)
+
+# Can I Donate?
+Sure! I incurred some costs, like getting an Apple Developer subscription so that the OS X auto updater would work (apps must be signed!) 
+
+[![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=JNFF7KKQLGVC4)
+
+# Developer Stuff
+
+## NPM scripts
+* npm start - starts up HOTSBA locally, in development mode (auto updater is diabled..)
+* npm run genTemplates - generates all of the mustache templates in `app/ui/templates`
+* npm run dist - builds installers, for your current platform.
+
+# Shoutouts
+Thanks to arc (some dev help), and all my friends who helped me test.
 
 Thanks to Ben @ HOTSLOGS for being open and communicating with me!
 

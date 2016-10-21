@@ -6,10 +6,19 @@
     delete window.require;
     delete window.exports;
     delete window.module;
+    const Hogan = nodeRequire('hogan.js');
     </script>
+    <script>
+	document.addEventListener("keydown", function (e) {
+		if (e.which === 123) {
+			nodeRequire('remote').getCurrentWindow().toggleDevTools();
+		} else if (e.which === 116) {
+			location.reload();
+		}
+	});
+</script>
     <script src="./ui/js/jquery-3.1.0.min.js"></script>
     <script src="./ui/js/materialize.min.js"></script>
-    <script src="http://twitter.github.com/hogan.js/builds/3.0.1/hogan-3.0.1.js"></script>
     <script src="./ui/templates/player_details_table.js"> </script>
     <script src="./ui/templates/hero_input_container.js"> </script>
     <script src="./ui/templates/my_team_container.js"> </script>
@@ -22,7 +31,6 @@
     <header>
       <nav>
         <div class="nav-wrapper light-blue darken-3">
-
           <div class="brand-logo right" tabindex="-1">
             <a href="http://www.hotsba.com">
               <img style="height:60px" class="responsive-img hide-on-small-only" src="./ui/images/logo.png"></img>
@@ -43,11 +51,12 @@
     </main>
     <footer class="page-footer light-blue darken-3">
       <div class="row">
-        <div class="white-text  col s6">
+        <div class="white-text col s6">
             <span>2016 ZDWare LLC (zerkz)</span>
             <div id="versionHeader"></div>
+            <div><a id="configProxyButton"class="waves-effect waves-light btn" tabindex="-1">Configure Proxy</a></div>
         </div>
-        <a class="col s3 m3 l2 right" href="http://www.hotslogs.com" tabindex="-1" target="_blank">
+        <a class="col s6 m3 l3 right" href="http://www.hotslogs.com" tabindex="-1" target="_blank">
         <div>
           <p>Powered By</p>
           <img class="responsive-img" src="./ui/images/hotslogs_logo.png"></img>
@@ -56,5 +65,6 @@
       </div>
     </footer>
     <script src="./ui/js/hotsba.js"></script>
+    <script src="./ui/js/proxy-config.js"></script>
   </body>
 </html>

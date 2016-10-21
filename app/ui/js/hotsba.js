@@ -4,8 +4,8 @@ let HeroImages = nodeRequire(__dirname + '/models/hero_images.js');
 let heroesImageMap;
 const numHeroes = 5;
 const playerDetailsClass = "player-details-table";
-
-const {app, shell} = nodeRequire('electron').remote;
+const remote = nodeRequire('electron').remote;
+const {app, shell} = remote;
 $('#versionHeader').text("v" + app.getVersion());
 const partial = { "hero_input_container" : templates["hero_input_container"] };
 $('#enemiesContainer').append(templates["enemy_team_container"].render({
@@ -102,3 +102,11 @@ function filterRankings(rankings) {
   rankings = $.map(rankings, function (ranking) { return ranking; });
   return rankings.filter(ranking => !hiddenRankings.includes(ranking.shortGameMode));
 }
+
+let proxyConfigWindow = remote.getCurrentWindow().proxyConfigWindow;
+
+$('#configProxyButton').click(function () {
+  if (!proxyConfigWindow.isVisible()) {
+    proxyConfigWindow.show();
+  }
+});

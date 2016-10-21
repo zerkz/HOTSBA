@@ -8,12 +8,25 @@ const HOTS_LOGS = "http://www.hotslogs.com/";
 const HOTS_LOGS_API = "https://api.hotslogs.com/Public/";
 const HOTS_LOGS_DEFAULT_SORT = '-level';
 
-request = request.defaults({
-  "User-Agent" : "HOTSBA_PLAYER"
-});
+let proxy = require('electron').remote.getGlobal("config").get("proxy");;
+let reqDefaults = {
+  "User-Agent" : "HOTSBA_HERO_IMAGE"
+};
+
+if (proxy && proxy.host) {
+  let proxyURL = URL.parse(proxy.host);
+  proxyURL.port = proxy.port || 80;
+  proxyURL.host = "";
+  if (proxy.username && proxy.password) {
+    proxyURL.auth = proxy.username + ":" + proxy.password;
+  }
+  console.log(proxyURL);
+  let proxyURLFormatted = URL.format(proxyURL);
+  reqDefaults.proxy = proxyURLFormatted;
+}
+request = request.defaults(reqDefaults);
 
 //AGGREGATORS - these wrap data calls and combine results.
-
 function getTopHeroesForPlayer(player, params) {
   params = params || {};
   let playerId = null;

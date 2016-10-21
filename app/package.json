@@ -1,7 +1,7 @@
 {
   "name": "hotsba",
   "productName": "HOTSBA",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "homepage": "www.hotsba.com",
   "description": "A draft helper/ban aid for Heroes of the Storm.",
   "main": "main.js",
@@ -12,10 +12,11 @@
   },
   "dependencies": {
     "cheerio": "^0.20.0",
-    "convict": "^1.4.0",
+    "configstore": "^2.1.0",
     "electron-squirrel-startup": "^1.0.0",
     "express": "^4.14.0",
     "fs-promise": "^0.5.0",
+    "hogan.js": "^3.0.2",
     "minimist": "^1.2.0",
     "request": "^2.73.0",
     "request-promise": "^4.0.2"

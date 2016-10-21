@@ -9,9 +9,25 @@ let fs = require('fs-promise');
 let URL = require('url');
 let Promise = require('bluebird');
 let async = require('async');
-request = request.defaults({
+let proxy = require('electron').remote.getGlobal("config").get("proxy");
+let reqDefaults = {
   "User-Agent" : "HOTSBA_HERO_IMAGE"
-});
+};
+
+if (proxy && proxy.host) {
+  let proxyURL = URL.parse(proxy.host);
+  proxyURL.port = proxy.port || 80;
+  proxyURL.host = "";
+  if (proxy.username && proxy.password) {
+    proxyURL.auth = proxy.username + ":" + proxy.password;
+  }
+  console.log(proxyURL);
+  let proxyURLFormatted = URL.format(proxyURL);
+  reqDefaults.proxy = proxyURLFormatted;
+}
+request = request.defaults(reqDefaults);
+
+
 
 const HOTS_LOGS_API_OPTS = {
   uri : "https://api.hotslogs.com/Public/Data/Heroes",
