@@ -8,7 +8,12 @@ const HOTS_LOGS = "http://www.hotslogs.com/";
 const HOTS_LOGS_API = "https://api.hotslogs.com/Public/";
 const HOTS_LOGS_DEFAULT_SORT = '-level';
 
-let proxy = require('electron').remote.getGlobal("config").get("proxy");;
+const remote = require('electron').remote;
+let proxy;
+if(remote) {
+  proxy = remote.getGlobal("config").get("proxy");
+}
+
 let reqDefaults = {
   "User-Agent" : "HOTSBA_HERO_IMAGE"
 };

@@ -8,8 +8,12 @@ let cheerio = require('cheerio');
 let fs = require('fs-promise');
 let URL = require('url');
 let Promise = require('bluebird');
-let async = require('async');
-let proxy = require('electron').remote.getGlobal("config").get("proxy");
+
+const remote = require('electron').remote;
+let proxy;
+if(remote) {
+  proxy = remote.getGlobal("config").get("proxy");
+}
 let reqDefaults = {
   "User-Agent" : "HOTSBA_HERO_IMAGE"
 };

@@ -3,9 +3,7 @@
   <head>
     <script>
 	document.addEventListener("keydown", function (e) {
-    console.log(e.which);
 		if (e.which === 123) {
-
       try {
         require('remote').getCurrentWindow().toggleDevTools();
       } catch (e){
