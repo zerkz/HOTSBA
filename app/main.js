@@ -52,6 +52,7 @@ autoUpdater.addListener("update-not-available", (event) => {
   destroyUpdateWindowSafely("update-not-available");
   createMainWindow();
 });
+
 autoUpdater.addListener("update-downloaded", (event, releaseNotes, releaseName) => {
   //so metal.
   destroyUpdateWindowSafely("update-downloaded");

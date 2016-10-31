@@ -1,5 +1,8 @@
 # Created by https://www.gitignore.io/api/git,node,osx
 
+#vs code debugger.
+.vscode/
+
 #electron distribution directory.
 dist
 

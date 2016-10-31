@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script>
+  window.nodeRequire = require;
+  delete window.require;
+  delete window.exports;
+  delete window.module;
+  </script>
+  <script src="./ui/js/jquery-3.1.0.min.js"></script>
+  <script src="./ui/js/materialize.min.js"></script>
+  <link href="./ui/css/materialize.min.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <h3 class="valign center-align">Proxy Config</h3>
+    <h5 class="valign center-align">(requires restart)</h5>
+    <form id="proxyConfigForm">
+      Host/URL:<input name="host" type="url" required pattern="https?://.+"></input>
+      Port:<input name="port" type="number" required></input>
+      Username:<input name="username" type="text"></input>
+      Password:<input name="password" type="text"></input>
+      <div class="valign center-align">
+        <span class="red-text text-darken-2">(this info will be stored in plaintext on your computer!)</span>
+      </div>
+      <div class="valign center-align">
+        <a id="saveProxyConfigButton"class="waves-effect waves-light btn" tabindex="1">Save and Restart</a>
+        <a id="cancelProxyConfigButton"class="waves-effect waves-light btn" tabindex="2">Cancel</a>
+      </div>
+    </form>
+    <script src="./ui/js/proxy-config.js"></script>
+</body>
+</html>

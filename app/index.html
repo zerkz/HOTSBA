@@ -2,21 +2,28 @@
 <html>
   <head>
     <script>
+	document.addEventListener("keydown", function (e) {
+    console.log(e.which);
+		if (e.which === 123) {
+
+      try {
+        require('remote').getCurrentWindow().toggleDevTools();
+      } catch (e){
+        alert(e);
+      }
+
+		} else if (e.which === 116) {
+			location.reload();
+		}
+	});
+</script>
+    <script>
     window.nodeRequire = require;
     delete window.require;
     delete window.exports;
     delete window.module;
     const Hogan = nodeRequire('hogan.js');
     </script>
-    <script>
-	document.addEventListener("keydown", function (e) {
-		if (e.which === 123) {
-			nodeRequire('remote').getCurrentWindow().toggleDevTools();
-		} else if (e.which === 116) {
-			location.reload();
-		}
-	});
-</script>
     <script src="./ui/js/jquery-3.1.0.min.js"></script>
     <script src="./ui/js/materialize.min.js"></script>
     <script src="./ui/templates/player_details_table.js"> </script>
