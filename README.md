@@ -52,11 +52,22 @@ I know. Just imagine it as an H next to a man trapped inside of a bandaid. #prog
 
 If you're a designer and you would like to help with some of the graphics, please reach out!
 
+## How do I use a proxy?
+Click configure proxy.
+
+Fill out the info. Leave username and password blank if the proxy requires no authorization.
+
+Make sure your URL includes http or https.
+
+Hit save and restart, and all traffic (besides auto updates) should be going through your proxy once HOTSBA restarts.
+
+*This will store your proxy configuration in plaintext on your computer.*
+
 # Feedback
 Please send feedback/suggestions to [admin@hotsba.com](admin@hotsba.com)
 
 # Can I Donate?
-Sure! I incurred some costs, like getting an Apple Developer subscription so that the OS X auto updater would work (apps must be signed!) 
+Sure! I incurred some costs, like getting an Apple Developer subscription so that the OS X auto updater would work (apps must be signed!)
 
 [![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=JNFF7KKQLGVC4)
 
