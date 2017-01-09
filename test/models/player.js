@@ -16,7 +16,7 @@ describe('PlayerModel', function() {
     });
     it("should always get my own playerId from my friend's player name.", function() {
       return expect(PlayerModel.getPlayerIdByName("imnasti"))
-        .to.eventually.equal('1978756');
+        .to.eventually.equal(1978756);
     });
   });
   describe("#getTopHeroesByPlayerId", function () {
