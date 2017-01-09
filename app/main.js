@@ -1,4 +1,4 @@
-//handle all these damn squirrel events.
+//handle all  squirrel events.
 if(require('electron-squirrel-startup')) return;
 const argv = require('minimist')(process.argv.slice(2));
 const electron = require('electron');
@@ -16,6 +16,7 @@ ipcMain.on('proxy-restart', function () {
   app.relaunch({
     args : "PROXY_RELAUNCH=true"
   });
+  //we have to exit the app twice for some reason...
   app.exit(0);
   app.exit(0);
 });

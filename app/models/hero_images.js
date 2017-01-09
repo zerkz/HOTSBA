@@ -25,7 +25,6 @@ if (proxy && proxy.host) {
   if (proxy.username && proxy.password) {
     proxyURL.auth = proxy.username + ":" + proxy.password;
   }
-  console.log(proxyURL);
   let proxyURLFormatted = URL.format(proxyURL);
   reqDefaults.proxy = proxyURLFormatted;
 }
