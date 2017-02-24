@@ -28,7 +28,7 @@ to make the atrocious icon you see :P
 I've been communicating with Ben from HOTSLOGS. And I got his permission for the "Powered By" snippet at the footer. Without data from HOTSLOGS, this tool would be nothing, so props to him!
 
 ## Will I get banned for using this?
-Never say never, but this is no different than loading up HOTSLOGS.com, and searching your enemies at the draft screen. HOTSBA does not read memory, or interact with the HOTS executable in any way.
+Never say never, but this is no different than loading up HOTSLOGS.com, and searching your enemies at the draft screen. HOTSBA does not read memory, or interact with the HOTS executable in any way. Both of these would be against Blizzard's terms of service.
 
 ## Can't you make it so I don't have to type in the names of players?
 No. This involves reading memory or doing some sort of insane pixel OCR. Stop being lazy,
