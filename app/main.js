@@ -34,9 +34,14 @@ var win = null;
 
 let devMode = (process.env.NODE_ENV == 'development') || (argv.NODE_ENV == 'development');
 
+if (devMode) {
+  require('request').debug = true;
+}
+
 if (!devMode) {
   updateFeed = os === 'darwin' ? osxUpdateFeed : winUpdateFeed;
 }
+
 
 if (updateFeed) {
   autoUpdater.setFeedURL(updateFeed + app.getVersion());

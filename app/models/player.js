@@ -25,7 +25,6 @@ if (proxy && proxy.host) {
   if (proxy.username && proxy.password) {
     proxyURL.auth = proxy.username + ":" + proxy.password;
   }
-  console.log(proxyURL);
   let proxyURLFormatted = URL.format(proxyURL);
   reqDefaults.proxy = proxyURLFormatted;
 }
@@ -52,7 +51,6 @@ function getDetailsForPlayer(player, params) {
 }
 
 // PLAYER ID
-
 function getPlayerId(name, region) {
   if (isBattleTag(name)) {
     return getPlayerIdByBattleTag(name, region);
@@ -102,7 +100,7 @@ function getPlayerDetails(player, params) {
   }
   let promise = null;
   if (isBattleTag(player)) {
-    promise = getHotsLogsPlayerDetailsByBattleTag(battleTag, params.region).then(
+    promise = getHotsLogsPlayerDetailsByBattleTag(battleTag, params).then(
       (data) => {
         return Promise.all([Promise.resolve(data), getPlayerProfile(data.PlayerID)]);
       });
@@ -112,14 +110,14 @@ function getPlayerDetails(player, params) {
   return promise.spread((data,$) => {
     let result = {};
     result.rankings = getRankings(data);
-    result.heroes = getTopHeroes($, params.limit, params.sort);
+    result.heroes = getTopHeroes($, params);
     result.roles = getRoles($);
     return result;
   })
 }
 
-function getHotsLogsPlayerDetailsByBattleTag(battleTag, region) {
-  region = region || REGIONS.US;
+function getHotsLogsPlayerDetailsByBattleTag(battleTag, params) {
+  region = params.region || REGIONS.US;
   if (!battleTag) {
     throw "getPlayerIdByBattleTag: battleTag not specified";
   }
@@ -146,13 +144,22 @@ function getHotsLogsPlayerDetailsByPlayerId(playerId) {
   });
 }
 
-function getPlayerProfile(id) {
+function getPlayerProfile(id, params) {
+  let gameMode = params.gameMode;
+  let timePeriod = params.timePeriod;
   return request.get(HOTS_LOGS + "Player/Profile?PlayerID=" + id).then(
-    (body) => { return cheerio.load(body); }
+    (body) => {
+      var $ = cheerio.load(body);
+      if (gameMode || timePeriod) {
+
+      }
+      return $;
+    }
   );
 }
 
-function getTopHeroesByPlayerId(limit, sort) {
+function getTopHeroesByPlayerId(params) {
+  params = params || {};
   return function(id) {
     if (!id) {
       throw "getTopHeroesByPlayerId: invalid id supplied";
@@ -160,16 +167,17 @@ function getTopHeroesByPlayerId(limit, sort) {
     return getPlayerProfile(id)
     .then(
       (body) => {
-        return getTopHeroes(body, limit, sort);
+        return getTopHeroes(body, params);
       }
     );
   }
 }
 
-
 // PARSERS
-function getTopHeroes($, limit, sort) {
-  limit = parseInt(limit) || 5;
+function getTopHeroes($, params) {
+  let limit = params.limit || 5;
+  let sort = params.sort;
+  limit = parseInt(limit);
   sort = sort || HOTS_LOGS_DEFAULT_SORT;
   let heroes = [];
   let $grid = $('div#heroStatistics table.rgMasterTable tr[id^="ctl00_MainContent_RadGridCharacterStatistics"]');
@@ -240,7 +248,6 @@ function getRoles($) {
 // SKILL or how gud we think they are..
 function getHeroSkill(hero) {
   // returns a skill rating for a player x hero, normalized from 0 - 100
-
   // naive approach that assumes both win % and level are scaled linearly
   // and have the same relative weight.
   let winPercent = hero.winPercent / 100.0;
@@ -249,6 +256,26 @@ function getHeroSkill(hero) {
 }
 
 //UTIL
+
+function getViewState($form) {
+  getRequiredInputValue($form, '__EVENTTARGET');
+  getRequiredInputValue($form, '__EVENTARGUMENT');
+  let viewStateArgs = {
+    '__VIEWSTATE' : getRequiredInputValue($form, '__VIEWSTATE'),
+    '__VIEWSTATEGENERATOR' : getRequiredInputValue($form, '__VIEWSTATEGENERATOR'),
+    '__EVENTVALIDATION' : getRequiredInputValue($form, '__EVENTVALIDATION')
+  }
+  return viewState;
+}
+
+function getRequiredInputValue($, id) {
+  var input = $.find('#' + id);
+  if (input.length > 0) {
+    return input.val();
+  } else {
+    throw id + ' input was not found.';
+  }
+}
 
 function isBattleTag(value) {
   if (!value) {
