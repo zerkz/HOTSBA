@@ -98,7 +98,8 @@ function getHeroImagePaths(heroesJSON, cloudFrontHost) {
 }
 
 function constructImageURL(imageName, cloudFrontHost) {
-  let imagePath = "http://" + cloudFrontHost + "/Images/Heroes/Portraits/"  + imageName + ".png";
+  let uriEncodedName = encodeURIComponent(imageName);
+  let imagePath = "http://" + cloudFrontHost + "/Images/Heroes/Portraits/"  + uriEncodedName + ".png";
   return imagePath;
 }
 
