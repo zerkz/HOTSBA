@@ -1,6 +1,6 @@
 {
   "name": "hotsba",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A draft helper/ban aid for Heroes of the Storm.",
   "repository": "https://github.com/zerkz/HOTSBA",
   "build": {
