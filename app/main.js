@@ -33,15 +33,16 @@ const winUpdateFeed = 'https://hotsba-nuts.herokuapp.com/update/win/';
 var win = null;
 
 let devMode = (process.env.NODE_ENV == 'development') || (argv.NODE_ENV == 'development');
+let isFirstRun = argv["squirrel-firstrun"];
 
 if (devMode) {
   require('request').debug = true;
-}
 
-if (!devMode) {
+}
+}
+if (!devMode && !isFirstRun) {
   updateFeed = os === 'darwin' ? osxUpdateFeed : winUpdateFeed;
 }
-
 
 if (updateFeed) {
   autoUpdater.setFeedURL(updateFeed + app.getVersion());
