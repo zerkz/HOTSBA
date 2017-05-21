@@ -1,4 +1,5 @@
 let PlayerModel = require(process.cwd() + '/app/models/player');
+let GameModeModel = require(process.cwd() + '/app/models/game_mode');
 let expect = require('chai').expect;
 
 //hotslogs API requires _ instead of #.
@@ -39,11 +40,15 @@ describe('PlayerModel', function() {
       return expect(PlayerModel.getTopHeroesForPlayer(MY_BATTLETAG, HEROES_LIMIT))
         .to.eventually.have.lengthOf(HEROES_LIMIT);
     });
+    it("should always get Tyrande as top played hero league player from my own player name."), function() {
+      return expect(PlayerModel.getTopHeroesForPlayer("zerkz", { gameMode : "Hero%20League"}));
+    });
   });
   describe("#getDetailsForPlayer", function () {
     it("should always get 5 heroes from my own player details", function() {
       return expect(PlayerModel.getDetailsForPlayer(MY_PLAYER_NAME, { region : 1, limit:HEROES_LIMIT}))
-        .to.eventually.have.property('heroes').with.lengthOf(HEROES_LIMIT)
+        .to.eventually.have.property('heroes').with.lengthOf(HEROES_LIMIT);
     });
   });
+
 });

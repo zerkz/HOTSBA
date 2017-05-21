@@ -37,9 +37,8 @@ let isFirstRun = argv["squirrel-firstrun"];
 
 if (devMode) {
   require('request').debug = true;
+}
 
-}
-}
 if (!devMode && !isFirstRun) {
   updateFeed = os === 'darwin' ? osxUpdateFeed : winUpdateFeed;
 }

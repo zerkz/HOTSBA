@@ -22,5 +22,11 @@ describe('GameModeModel', function() {
     it("should always have the first game mode resembling 'all modes'", function () {
       expect(gameModesAndTimespans.gameModes[0].toLowerCase()).to.include("all");
     });
+    it("should always have a gamemode input key", function () {
+      expect(gameModesAndTimespans.gameModeInputKey).to.exist.and.not.be.empty;
+    });
+    it("should always have a timespan input key", function () {
+      expect(gameModesAndTimespans.timeSpanInputKey).to.exist.and.not.be.empty;
+    });
   });
 });

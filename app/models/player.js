@@ -4,7 +4,7 @@ let cheerio = require('cheerio');
 let URL = require('url');
 let Promise = require('bluebird');
 
-const HOTS_LOGS = "http://www.hotslogs.com/";
+const HOTS_LOGS = "https://www.hotslogs.com/";
 const HOTS_LOGS_API = "https://api.hotslogs.com/Public/";
 const HOTS_LOGS_DEFAULT_SORT = '-level';
 
@@ -102,10 +102,10 @@ function getPlayerDetails(player, params) {
   if (isBattleTag(player)) {
     promise = getHotsLogsPlayerDetailsByBattleTag(battleTag, params).then(
       (data) => {
-        return Promise.all([Promise.resolve(data), getPlayerProfile(data.PlayerID)]);
+        return Promise.all([Promise.resolve(data), getPlayerProfile(data.PlayerID, params)]);
       });
   } else {
-    promise = Promise.all([getHotsLogsPlayerDetailsByPlayerId(player),getPlayerProfile(player)]);
+    promise = Promise.all([getHotsLogsPlayerDetailsByPlayerId(player),getPlayerProfile(player, params)]);
   }
   return promise.spread((data,$) => {
     let result = {};
@@ -131,6 +131,7 @@ function getHotsLogsPlayerDetailsByBattleTag(battleTag, params) {
   });
 }
 
+//API call, no heroes in this one.
 function getHotsLogsPlayerDetailsByPlayerId(playerId) {
   if (!playerId) {
     throw "getHotsLogsPlayerDetailsByPlayerId: playerId not specified.";
@@ -144,10 +145,21 @@ function getHotsLogsPlayerDetailsByPlayerId(playerId) {
   });
 }
 
+//Method that setups up the request/flow needed to get the desired player profile
+//May HTTP request multiple times due to the shitty thing that is viewstate scrapping.
 function getPlayerProfile(id, params) {
   let gameMode = params.gameMode;
   let timePeriod = params.timePeriod;
-  return request.get(HOTS_LOGS + "Player/Profile?PlayerID=" + id).then(
+  var reqOpts = {
+    uri : HOTS_LOGS + "Player/Profile?PlayerID=" + id,
+  };
+  //if (params.)
+  if (gameMode) {
+    delete params.gameMode;
+  } else if (timePeriod) {
+    delete params.timePeriod;
+  }
+  return request.get(reqOpts).then(
     (body) => {
       var $ = cheerio.load(body);
       if (gameMode || timePeriod) {
@@ -158,13 +170,14 @@ function getPlayerProfile(id, params) {
   );
 }
 
+
 function getTopHeroesByPlayerId(params) {
   params = params || {};
   return function(id) {
     if (!id) {
       throw "getTopHeroesByPlayerId: invalid id supplied";
     }
-    return getPlayerProfile(id)
+    return getPlayerProfile(id, params)
     .then(
       (body) => {
         return getTopHeroes(body, params);
@@ -256,7 +269,6 @@ function getHeroSkill(hero) {
 }
 
 //UTIL
-
 function getViewState($form) {
   getRequiredInputValue($form, '__EVENTTARGET');
   getRequiredInputValue($form, '__EVENTARGUMENT');
