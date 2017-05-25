@@ -40,9 +40,9 @@ describe('PlayerModel', function() {
       return expect(PlayerModel.getTopHeroesForPlayer(MY_BATTLETAG, HEROES_LIMIT))
         .to.eventually.have.lengthOf(HEROES_LIMIT);
     });
-    it("should always get Tyrande as top played hero league player from my own player name."), function() {
-      return expect(PlayerModel.getTopHeroesForPlayer("zerkz", { gameMode : "Hero%20League"}));
-    });
+    // it("should always get Tyrande as top played hero league player from my own player name."), function() {
+    //   return expect(PlayerModel.getTopHeroesForPlayer("zerkz", { gameMode : "Hero%20League"}));
+    // });
   });
   describe("#getDetailsForPlayer", function () {
     it("should always get 5 heroes from my own player details", function() {
