@@ -1,3 +1,5 @@
+# Under construction, being ported over to better frontend/vue.js. 
+
 # hotsba
 
 > Heroes of the Storm ban aid/draft helper.
