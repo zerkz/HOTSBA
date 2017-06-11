@@ -1,1 +1,0 @@
-downloaded hero images will go here... this file exists to trick electron-builder into creating it.
