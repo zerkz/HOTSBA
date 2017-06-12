@@ -20,9 +20,8 @@ Repeat until you have the enemy team mapped out! Also available is an "Allies" t
 ## What benefit do I gain over HotsStats/HotsLogs Uploader?
 HOTSBA is meant to be used during the draft phase. Both of the above tools currently do not present any information until the loading screen/after draft has happened.
 
-## WTF does HOTSBA it stand for?
-Heroes Of The Storm Ban Aid. Used to be named hotsMPH (most played heroes). The name allowed me
-to make the atrocious icon you see :P
+## What does HOTSBA it stand for?
+Heroes Of The Storm Ban Aid.
 
 ## Does HOTSLOGS know about this?
 I've been communicating with Ben from HOTSLOGS. And I got his permission for the "Powered By" snippet at the footer. Without data from HOTSLOGS, this tool would be nothing, so props to him!
@@ -31,26 +30,13 @@ I've been communicating with Ben from HOTSLOGS. And I got his permission for the
 Never say never, but this is no different than loading up HOTSLOGS.com, and searching your enemies at the draft screen. HOTSBA does not read memory, or interact with the HOTS executable in any way. Both of these would be against Blizzard's terms of service.
 
 ## Can't you make it so I don't have to type in the names of players?
-No. This involves reading memory or doing some sort of insane pixel OCR. Stop being lazy,
-type in a name, hit tab, repeat.
-
-## Will this make me good?
-Maybe? Personally, I hit Grandmaster without it, but they say "know your enemy".
-It's a common tactic in the competitive scene to ban heroes that players have gathered
-reputation for. This is why the pros know how to play many heroes!
-
-My #1 piece of advice? Work with your team, even if they are raging/being obnoxious. Save criticism for after the game.
+No. This involves reading memory or doing some sort of insane pixel OCR.
 
 ## Why is the Windows installer gif so strange/weird. ARE YOU HACKING MY COMPUTER?
 It's based upon Squirrel. I learned about all of this + build servers in nearly two days,
 so I haven't had time to make a .gif that doesn't seem completely different from the HOTSBA theme.
 
 Designers feel free to come up with an nice gif to show during install!
-
-## Dude... this icon....
-I know. Just imagine it as an H next to a man trapped inside of a bandaid. #programmer_art
-
-If you're a designer and you would like to help with some of the graphics, please reach out!
 
 ## How do I use a proxy?
 Click configure proxy.
