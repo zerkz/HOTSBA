@@ -2,6 +2,8 @@
 [![Build Status](https://travis-ci.org/zerkz/HOTSBA.svg?branch=master)](https://travis-ci.org/zerkz/HOTSBA)
 [![Build status](https://ci.appveyor.com/api/projects/status/qyvtkswriw4x0uyo?svg=true)](https://ci.appveyor.com/project/zerkz/hotsba)
 
+HOTSBA is a informational tool to help you decide who to ban during draft, based upon heroes what your opponents and teammates play often.
+
 ## Downloads
 * [Windows x64](https://goo.gl/WVWLUi)
 * [OS X](https://goo.gl/XB5SYt)
