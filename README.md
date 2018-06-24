@@ -4,6 +4,8 @@
 
 HOTSBA is a informational tool to help you decide who to ban during draft, based upon heroes what your opponents and teammates play often.
 
+** Note: This Project is currently not maintained, and its functionality is limited due to the hiding of player names in Draft! However, if anyone still wants to use it for their teammates, you are welcome!
+
 ## Downloads
 * [Windows x64](https://goo.gl/WVWLUi)
 * [OS X](https://goo.gl/XB5SYt)
